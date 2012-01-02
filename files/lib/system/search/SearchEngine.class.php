@@ -51,6 +51,20 @@ class SearchEngine extends SingletonFactory {
 	}
 	
 	public function search($q, array $objectTypes, $subjectOnly = false, array $additionalConditions = array(), $orderBy = 'time DESC', $limit = 1000) {
+		// handle sql types
+		$fulltextConditionString = '';
+		if (!empty($q)) {
+			if (WCF::getDB()->getDBType() == 'wcf\system\database\MySQLDatabase') {
+				$fulltextConditionString = "MATCH (search_index.subject".(!$subjectOnly ? ', search_index.message, search_index.metaData' : '').") AGAINST (? IN BOOLEAN MODE)";
+			}
+			else if (WCF::getDB()->getDBType() == 'wcf\system\database\PostgreSQLDatabase') {
+				$fulltextConditionString = "to_tsvector(search_index.subject".(!$subjectOnly ? " || ' ' || search_index.message || ' ' || search_index.metaData" : '').") @@ to_tsquery(?)";
+			}
+			else {
+				throw new SystemException('your database type doesn\'t support fulltext search');
+			}
+		}
+		
 		// build search query
 		$sql = '';
 		$parameters = array();
@@ -62,11 +76,11 @@ class SearchEngine extends SingletonFactory {
 							'".$objectTypeName."' AS objectType
 					FROM 		wcf".WCF_N."_search_index search_index
 							".$objectType->getJoins()."
-					WHERE		".(!empty($q) ? "MATCH (search_index.subject".(!$subjectOnly ? ', search_index.message, search_index.metaData' : '').") AGAINST (? IN BOOLEAN MODE)" : "")."
+					WHERE		".$fulltextConditionString."
 							".((isset($additionalConditions[$objectTypeName]) && $additionalConditions[$objectTypeName]->__toString()) ? " ".(!empty($q) ? "AND" : "")." (".$additionalConditions[$objectTypeName].")" : "")."
 			)";
 			
-			$parameters[] = $q;
+			if (!empty($q)) $parameters[] = $q;
 			if (isset($additionalConditions[$objectTypeName])) $parameters = array_merge($parameters, $additionalConditions[$objectTypeName]->getParameters());
 		}
 		if (empty($sql)) {
