@@ -141,14 +141,17 @@ class SearchForm extends RecaptchaForm {
 		
 		// check search hash
 		if (!empty($this->query)) {
+			$parameters = array($this->searchHash, 'messages', TIME_NOW - 1800);
+			if (WCF::getUser()->userID) $parameters[] = WCF::getUser()->userID;
+			
 			$sql = "SELECT	searchID
 				FROM	wcf".WCF_N."_search
 				WHERE	searchHash = ?
-					AND userID = ?
 					AND searchType = ?
-					AND searchTime > ?";
+					AND searchTime > ?
+					".(WCF::getUser()->userID ? 'AND userID = ?' : 'AND userID IS NULL');
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->searchHash, WCF::getUser()->userID, 'messages', TIME_NOW - 1800));
+			$statement->execute($parameters);
 			$row = $statement->fetchArray();
 			if ($row !== false) {
 				HeaderUtil::redirect(LinkHandler::getInstance()->getLink('SearchResult', array('id' => $row['searchID']), 'highlight='.urlencode($this->query)));
@@ -216,7 +219,7 @@ class SearchForm extends RecaptchaForm {
 		}
 		else {*/
 			$searchAction = new SearchAction(array(), 'create', array('data' => array(
-				'userID' => WCF::getUser()->userID,
+				'userID' => (WCF::getUser()->userID ?: null),
 				'searchData' => serialize($this->searchData),
 				'searchTime' => TIME_NOW,
 				'searchType' => 'messages',
