@@ -54,14 +54,15 @@ class SearchEngine extends SingletonFactory {
 		// handle sql types
 		$fulltextConditionString = '';
 		if (!empty($q)) {
-			if (WCF::getDB()->getDBType() == 'wcf\system\database\MySQLDatabase') {
-				$fulltextConditionString = "MATCH (search_index.subject".(!$subjectOnly ? ', search_index.message, search_index.metaData' : '').") AGAINST (? IN BOOLEAN MODE)";
-			}
-			else if (WCF::getDB()->getDBType() == 'wcf\system\database\PostgreSQLDatabase') {
-				$fulltextConditionString = "to_tsvector(search_index.subject".(!$subjectOnly ? " || ' ' || search_index.message || ' ' || search_index.metaData" : '').") @@ to_tsquery(?)";
-			}
-			else {
-				throw new SystemException("your database type doesn't support fulltext search");
+			switch (WCF::getDB()->getDBType()) {
+				case 'wcf\system\database\MySQLDatabase':
+					$fulltextConditionString = "MATCH (search_index.subject".(!$subjectOnly ? ', search_index.message, search_index.metaData' : '').") AGAINST (? IN BOOLEAN MODE)";
+				break;
+				case 'wcf\system\database\PostgreSQLDatabase':
+					$fulltextConditionString = "to_tsvector(search_index.subject".(!$subjectOnly ? " || ' ' || search_index.message || ' ' || search_index.metaData" : '').") @@ to_tsquery(?)";
+				break;
+				default:
+					throw new SystemException("your database type doesn't support fulltext search");
 			}
 		}
 		
