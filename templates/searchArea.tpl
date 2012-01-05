@@ -26,6 +26,8 @@
 			else {
 				$('#search').animate({
 					right: '+='+(dimensions.width + 32)
+				}, 600, function() {
+					$('#search').find('input').focus();
 				});
 				$('#search').find('img').removeClass('balloonTooltip');
 			}
