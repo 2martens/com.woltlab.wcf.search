@@ -60,7 +60,7 @@ class SearchIndexManager extends SingletonFactory {
 		// save new entry
 		$sql = "INSERT INTO	wcf".WCF_N."_search_index
 					(objectTypeID, objectID, subject, message, time, userID, username, metaData)
-			VALUES		(?, ?, ?, ?, ?, ?, ?)";
+			VALUES		(?, ?, ?, ?, ?, ?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->getObjectTypeID($objectType), $objectID, $subject, $message, $time, $userID, $username, $metaData));
 	}

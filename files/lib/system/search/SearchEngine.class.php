@@ -61,7 +61,7 @@ class SearchEngine extends SingletonFactory {
 				$fulltextConditionString = "to_tsvector(search_index.subject".(!$subjectOnly ? " || ' ' || search_index.message || ' ' || search_index.metaData" : '').") @@ to_tsquery(?)";
 			}
 			else {
-				throw new SystemException('your database type doesn\'t support fulltext search');
+				throw new SystemException("your database type doesn't support fulltext search");
 			}
 		}
 		
