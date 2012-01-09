@@ -7,6 +7,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
 use wcf\system\search\SearchEngine;
+use wcf\system\search\SearchKeywordManager;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\HeaderUtil;
@@ -227,6 +228,11 @@ class SearchForm extends RecaptchaForm {
 			)));	
 			$resultValues = $searchAction->executeAction();
 			$this->searchID = $resultValues['returnValues']->searchID;
+			
+			// save keyword
+			if (!empty($this->query)) {
+				SearchKeywordManager::getInstance()->add($this->query);
+			}
 		//}
 		$this->saved();
 		

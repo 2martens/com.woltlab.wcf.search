@@ -9,29 +9,11 @@
 	</div>
 </aside>
 
+<script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/WCF.Search.Message.js"></script>
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
-		// get input size
-		var dimensions = $('#search').find('input').getDimensions();
-		$('#search').css('right', ((dimensions.width + 62) * -1) + 'px');
-		
-		$('#search').find('img').click(function() {
-			if ($('#search').css('right') == '-30px') {
-				$('#search').animate({
-					right: '-='+(dimensions.width + 32)
-				});
-				$('#search').find('img').addClass('balloonTooltip');
-			}
-			else {
-				$('#search').animate({
-					right: '+='+(dimensions.width + 32)
-				}, 600, function() {
-					$('#search').find('input').focus();
-				});
-				$('#search').find('img').removeClass('balloonTooltip');
-			}
-		});
+		new WCF.Search.Message.SearchArea($('#search'));
 	});
 	//]]>
 </script>

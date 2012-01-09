@@ -21,5 +21,5 @@ CREATE TABLE wcf1_search_keyword (
 	keyword VARCHAR(255) NOT NULL,
 	searches INT(10) NOT NULL DEFAULT 0,
 	lastSearchTime INT(10) NOT NULL DEFAULT 0,
-	KEY (keyword)
+	UNIQUE KEY (keyword)
 );
