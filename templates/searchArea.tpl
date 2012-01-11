@@ -1,9 +1,9 @@
 <aside class="search" id="search">
-	<img src="{icon}search2{/icon}" alt="" title="{lang}wcf.global.button.search{/lang}" class="collapsible balloonTooltip" />
+	<img src="{icon size='M'}search2{/icon}" alt="" title="{lang}wcf.global.button.search{/lang}" class="collapsible balloonTooltip" />
 	<div>
 		<form method="post" action="{link controller='Search'}{/link}">
 			<input type="search" name="q" results="5" autosave="autosave" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" value="" />
-			<!-- Search Settings should go here and be put on an icon (image button?) -->
+			<!-- Search Settings should go here right after the search-input and be put on an icon (image button?) -->
 		</form>
 	</div>
 </aside>
