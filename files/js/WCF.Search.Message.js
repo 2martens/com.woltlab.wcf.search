@@ -42,7 +42,7 @@ WCF.Search.Message.SearchArea.prototype = {
 			else {
 				this._searchArea.animate({
 					right: '+='+(this._inputDimensions.width + 32)
-				}, 600, $.proxy(function() {
+				}, 100, $.proxy(function() {
 					this._searchArea.find('input').focus();
 				}, this));
 			}
