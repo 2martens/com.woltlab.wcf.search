@@ -52,7 +52,7 @@
 			<ul class="largeButtons">
 				{content}
 					{if $alterable}
-						<li><a href="{link controller='Search' id=$searchID}modify={@$searchID}{/link}"><img src="{icon size='M'}search1{/icon}" alt="" /> <span>{lang}wcf.search.results.change{/lang}</span></a></li></ul>
+						<li><a href="{link controller='Search'}modify={@$searchID}{/link}"><img src="{icon size='M'}search1{/icon}" alt="" /> <span>{lang}wcf.search.results.change{/lang}</span></a></li></ul>
 					{/if}
 					{event name='largeButtonsBottom'}
 				{/content}
