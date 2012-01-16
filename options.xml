@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/options.xsd">
+	<import>
+		<categories>
+			<category name="message.search">
+				<parent>message</parent>
+			</category>
+		</categories>
+	
+		<options>
+			<option name="search_results_per_page">
+				<categoryname>message.search</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue><![CDATA[20]]></defaultvalue>
+			</option>
+			<option name="search_use_captcha">
+				<categoryname>security.antispam</categoryname>
+				<optiontype>boolean</optiontype>
+			</option>
+			
+			<option name="search_default_sort_field">
+				<categoryname>message.search</categoryname>
+				<optiontype>select</optiontype>
+				<selectoptions><![CDATA[relevance:wcf.search.sortBy.relevance
+subject:wcf.search.sortBy.subject
+time:wcf.search.sortBy.creationDate
+username:wcf.search.sortBy.author]]></selectoptions>
+				<defaultvalue><![CDATA[relevance]]></defaultvalue>
+			</option>
+			<option name="search_default_sort_order">
+				<categoryname>message.search</categoryname>
+				<optiontype>select</optiontype>
+				<defaultvalue>DESC</defaultvalue>
+				<selectoptions><![CDATA[ASC:wcf.global.sortOrder.ascending
+DESC:wcf.global.sortOrder.descending]]></selectoptions>
+			</option>
+		</options>
+	</import>
+</data>

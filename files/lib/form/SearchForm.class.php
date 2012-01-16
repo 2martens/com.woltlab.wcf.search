@@ -1,7 +1,9 @@
 <?php
 namespace wcf\form;
+use wcf\data\search\Search;
 use wcf\data\search\SearchAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
@@ -72,6 +74,8 @@ class SearchForm extends RecaptchaForm {
 	public $results = array();
 	public $searchData = array();
 	public $searchID = 0;
+	public $modifySearchID = 0;
+	public $modifySearch = null;
 	
 	/**
 	 * @see wcf\page\IPage::readParameters()
@@ -84,6 +88,34 @@ class SearchForm extends RecaptchaForm {
 		if (isset($_REQUEST['userID'])) $this->userID = intval($_REQUEST['userID']);
 		if (isset($_REQUEST['selectedObjectTypes']) && is_array($_REQUEST['selectedObjectTypes'])) $this->selectedObjectTypes = $_REQUEST['selectedObjectTypes'];
 		$this->submit = (count($_POST) || !empty($this->query) || !empty($this->username) || $this->userID);
+		
+		if (isset($_REQUEST['modify'])) {
+			$this->modifySearchID = intval($_REQUEST['modify']);
+			$this->modifySearch = new Search($this->modifySearchID);
+			
+			if (!$this->modifySearch->searchID || ($this->modifySearch->userID && $this->modifySearch->userID != WCF::getUser()->userID)) {
+				throw new IllegalLinkException();
+			}
+			
+			$this->searchData = unserialize($this->modifySearch->searchData);
+			if (empty($this->searchData['alterable'])) {
+				throw new IllegalLinkException();
+			}
+			$this->query = $this->searchData['query'];
+			$this->sortOrder = $this->searchData['sortOrder'];
+			$this->sortField = $this->searchData['sortField'];
+			$this->nameExactly = $this->searchData['nameExactly'];
+			$this->subjectOnly = $this->searchData['subjectOnly'];
+			$this->startDate = $this->searchData['startDate'];
+			$this->endDate = $this->searchData['endDate'];
+			$this->username = $this->searchData['username'];
+			$this->userID = $this->searchData['userID'];
+			$this->selectedObjectTypes = $this->searchData['selectedObjectTypes'];
+			
+			if (count($_POST)) {
+				$this->submit = true;
+			}
+		}
 		
 		// sort order
 		if (isset($_REQUEST['sortField'])) {
@@ -208,32 +240,30 @@ class SearchForm extends RecaptchaForm {
 			'selectedObjectTypes' => $this->selectedObjectTypes,
 			'alterable' => (!$this->userID ? 1 : 0)
 		);
-		
-		/*if ($this->searchID) {
-			$sql = "UPDATE	wcf".WCF_N."_search
-				SET	searchData = '".escapeString(serialize($this->searchData))."',
-					searchDate = ".TIME_NOW.",
-					searchType = 'messages',
-					searchHash = '".$this->searchHash."'
-				WHERE	searchID = ".$this->searchID;
-			WCF::getDB()->sendQuery($sql);
+		if ($this->modifySearchID) {
+			$searchAction = new SearchAction(array($this->modifySearchID), 'update', array('data' => array(
+				'searchData' => serialize($this->searchData),
+				'searchTime' => TIME_NOW,
+				'searchType' => 'messages',
+				'searchHash' => $this->searchHash
+			)));
+			$searchAction->executeAction();
 		}
-		else {*/
+		else {
 			$searchAction = new SearchAction(array(), 'create', array('data' => array(
 				'userID' => (WCF::getUser()->userID ?: null),
 				'searchData' => serialize($this->searchData),
 				'searchTime' => TIME_NOW,
 				'searchType' => 'messages',
 				'searchHash' => $this->searchHash
-			)));	
+			)));
 			$resultValues = $searchAction->executeAction();
 			$this->searchID = $resultValues['returnValues']->searchID;
-			
-			// save keyword
-			if (!empty($this->query)) {
-				SearchKeywordManager::getInstance()->add($this->query);
-			}
-		//}
+		}
+		// save keyword
+		if (!empty($this->query)) {
+			SearchKeywordManager::getInstance()->add($this->query);
+		}
 		$this->saved();
 		
 		// forward to result page

@@ -6,7 +6,7 @@ CREATE TABLE wcf1_search_index (
 	message MEDIUMTEXT,
 	metaData MEDIUMTEXT,
 	time INT(10) NOT NULL DEFAULT 0,
-	userID INT(10) NOT NULL DEFAULT 0,
+	userID INT(10),
 	username VARCHAR(255) NOT NULL DEFAULT '',
 	UNIQUE KEY (objectTypeID, objectID),
 	FULLTEXT INDEX (subject, message, metaData),

@@ -48,6 +48,12 @@ WCF.Search.Message.SearchArea.prototype = {
 			}
 		}, this));
 		
-		new WCF.Search.Message.KeywordList(this._searchArea.find('input'), function() {});
+		new WCF.Search.Message.KeywordList(this._searchArea.find('input'), $.proxy(this._callback, this));
+	},
+
+	_callback: function(data) {
+		this._searchArea.find('input').val(data.label);
+		this._searchArea.find('input').focus();
+		return false;
 	}
 };
