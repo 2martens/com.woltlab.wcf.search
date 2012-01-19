@@ -74,13 +74,12 @@ class SearchEngine extends SingletonFactory {
 			$idFieldName = $objectType->getIDFieldName();
 			if (!empty($sql)) $sql .= "\nUNION\n";
 			
-			$sql .= "(	SELECT		search_index.*,".($idFieldName ? $idFieldName." AS objectID," : '')."
+			$sql .= "(	SELECT		".($idFieldName ? "DISTINCT ".$idFieldName." AS objectID" : 'search_index.objectID').", search_index.subject, search_index.time, search_index.username,
 							'".$objectTypeName."' AS objectType
 					FROM 		wcf".WCF_N."_search_index search_index
 							".$objectType->getJoins()."
 					WHERE		".$fulltextConditionString."
 							".((isset($additionalConditions[$objectTypeName]) && $additionalConditions[$objectTypeName]->__toString()) ? " ".(!empty($q) ? "AND" : "")." (".$additionalConditions[$objectTypeName].")" : "")."
-					".($idFieldName ? "GROUP BY objectID" : '')."
 			)";
 			
 			if (!empty($q)) $parameters[] = $q;
