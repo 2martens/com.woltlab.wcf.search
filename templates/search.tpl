@@ -95,7 +95,7 @@
 		
 		{foreach from=$objectTypes key=objectTypeName item=objectType}
 			{if $objectType->isAccessible() && $objectType->getFormTemplateName()}
-				{capture assign='__jsID'}{@'.'|str_replace:'_':$objectTypeName}{/capture}
+				{assign var='__jsID' value='.'|str_replace:'_':$objectTypeName}
 				<fieldset id="{@$__jsID}Form">
 					<legend>{lang}wcf.search.type.{@$objectTypeName}{/lang}</legend>
 					

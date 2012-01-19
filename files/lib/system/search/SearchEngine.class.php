@@ -71,14 +71,16 @@ class SearchEngine extends SingletonFactory {
 		$parameters = array();
 		foreach ($objectTypes as $objectTypeName) {
 			$objectType = $this->getObjectType($objectTypeName);
+			$idFieldName = $objectType->getIDFieldName();
 			if (!empty($sql)) $sql .= "\nUNION\n";
 			
-			$sql .= "(	SELECT		search_index.*,
+			$sql .= "(	SELECT		search_index.*,".($idFieldName ? $idFieldName." AS objectID," : '')."
 							'".$objectTypeName."' AS objectType
 					FROM 		wcf".WCF_N."_search_index search_index
 							".$objectType->getJoins()."
 					WHERE		".$fulltextConditionString."
 							".((isset($additionalConditions[$objectTypeName]) && $additionalConditions[$objectTypeName]->__toString()) ? " ".(!empty($q) ? "AND" : "")." (".$additionalConditions[$objectTypeName].")" : "")."
+					".($idFieldName ? "GROUP BY objectID" : '')."
 			)";
 			
 			if (!empty($q)) $parameters[] = $q;

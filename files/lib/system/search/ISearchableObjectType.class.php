@@ -53,6 +53,13 @@ interface ISearchableObjectType {
 	public function getJoins();
 	
 	/**
+	 * Returns the database field name of the message id.
+	 * 
+	 * @return	string
+	 */
+	public function getIDFieldName();
+	
+	/**
 	 * Returns additional search information.
 	 * 
 	 * @return	mixed
