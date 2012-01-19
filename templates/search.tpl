@@ -34,6 +34,8 @@
 				<dd>
 					<input type="text" id="searchTerm" name="q" value="{$query}" class="long" maxlength="255" />
 					<label><input type="checkbox" name="subjectOnly" value="1"{if $subjectOnly == 1} checked="checked"{/if} /> {lang}wcf.search.subjectOnly{/lang}</label>
+					{event name='queryOptions'}
+					
 					<small>{lang}wcf.search.query.description{/lang}</small>
 				</dd>
 			</dl>
@@ -43,20 +45,15 @@
 				<dd>
 					<input type="text" id="searchAuthor" name="username" value="{$username}" class="long" maxlength="255" />
 					<label><input type="checkbox" name="nameExactly" value="1"{if $nameExactly == 1} checked="checked"{/if} /> {lang}wcf.search.matchExactly{/lang}</label>
+					{event name='authorOptions'}
 				</dd>
 			</dl>
 			
 			<dl>
-				<dt><label for="startDate">{lang}wcf.search.startDate{/lang}</label></dt>
+				<dt><label for="startDate">{lang}wcf.search.period{/lang}</label></dt>
 				<dd>
 					<input type="date" id="startDate" name="startDate" value="{$startDate}" />
-				</dd>
-			</dl>
-			
-			<dl>
-				<dt><label for="endDate">{lang}wcf.search.endDate{/lang}</label></dt>
-				<dd>
-					<input type="date" id="endDate" name="endDate" value="{$endDate}" />
+					- <input type="date" id="endDate" name="endDate" value="{$endDate}" />
 				</dd>
 			</dl>
 			
@@ -77,13 +74,15 @@
 				</dd>
 			</dl>
 			
+			{event name='options'}
+			
 			<dl>
-				<dt><label for="endDate">{lang}wcf.search.type{/lang}</label></dt>
+				<dt>{lang}wcf.search.type{/lang}</dt>
 				<dd>
 					<ul class="formOptions">
 					{foreach from=$objectTypes key=objectTypeName item=objectType}
 						{if $objectType->isAccessible()}
-							<li><label><input id="{@$objectTypeName}" type="checkbox" name="types[]" value="{@$objectTypeName}"{if $objectTypeName|in_array:$selectedObjectTypes} checked="checked"{/if} {if $objectType->getFormTemplateName()}onclick="showSearchForm('{@$objectTypeName}Form', this.checked)" {/if}/> {lang}wcf.search.type.{@$objectTypeName}{/lang}</label></li>
+							<li><label><input id="{@'.'|str_replace:'_':$objectTypeName}" type="checkbox" name="types[]" value="{@$objectTypeName}"{if $objectTypeName|in_array:$selectedObjectTypes} checked="checked"{/if} /> {lang}wcf.search.type.{@$objectTypeName}{/lang}</label></li>
 						{/if}
 					{/foreach}
 					</ul>
@@ -91,22 +90,29 @@
 			</dl>
 		</fieldset>
 		
+		{event name='fields'}
 		{if $useCaptcha}{include file='recaptcha'}{/if}
 		
 		{foreach from=$objectTypes key=objectTypeName item=objectType}
 			{if $objectType->isAccessible() && $objectType->getFormTemplateName()}
-				<fieldset id="{$objectTypeName}Form">
-					<legend>{lang}wcf.search.type.{$objectTypeName}{/lang}</legend>
+				{capture assign='__jsID'}{@'.'|str_replace:'_':$objectTypeName}{/capture}
+				<fieldset id="{@$__jsID}Form">
+					<legend>{lang}wcf.search.type.{@$objectTypeName}{/lang}</legend>
 					
 					<div>{include file=$objectType->getFormTemplateName()}</div>
 				
-					{if !$objectTypeName|in_array:$selectedObjectTypes}
-						<script type="text/javascript">
-							//<![CDATA[
-							showSearchForm('{$objectTypeName}Form', false);
-							//]]>
-						</script>
-					{/if}
+					<script type="text/javascript">
+						//<![CDATA[
+						$(function() {
+							$('#{@$__jsID}').click(function() {
+								console.debug('test');
+								if (this.checked) $('#{@$__jsID}Form').wcfFadeIn();
+								else $('#{@$__jsID}Form').wcfFadeOut();
+							});
+							{if !$objectTypeName|in_array:$selectedObjectTypes}$('#{@$__jsID}Form').hide();{/if}
+						});
+						//]]>
+					</script>
 				</fieldset>
 			{/if}
 		{/foreach}
