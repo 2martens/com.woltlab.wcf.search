@@ -54,6 +54,8 @@
 				<dd>
 					<input type="date" id="startDate" name="startDate" value="{$startDate}" />
 					- <input type="date" id="endDate" name="endDate" value="{$endDate}" />
+					
+					<small>{lang}wcf.search.period.description{/lang}</small>
 				</dd>
 			</dl>
 			
