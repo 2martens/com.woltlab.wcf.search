@@ -32,7 +32,7 @@
 			<dl{if $errorField == 'q'} class="formError"{/if}>
 				<dt><label for="searchTerm">{lang}wcf.search.query{/lang}</label></dt>
 				<dd>
-					<input type="text" id="searchTerm" name="q" value="{$query}" class="long" maxlength="255" />
+					<input type="text" id="searchTerm" name="q" value="{$query}" class="long" maxlength="255" autofocus="autofocus" placeholder="{lang}wcf.search.query{/lang}" />
 					<label><input type="checkbox" name="subjectOnly" value="1"{if $subjectOnly == 1} checked="checked"{/if} /> {lang}wcf.search.subjectOnly{/lang}</label>
 					{event name='queryOptions'}
 					
