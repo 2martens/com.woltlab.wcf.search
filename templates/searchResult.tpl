@@ -26,7 +26,7 @@
 			<ul class="largeButtons">
 				{content}
 					{if $alterable}
-						<li><a href="{link controller='Search'}modify={@$searchID}{/link}"><img src="{icon size='M'}search1{/icon}" alt="" /> <span>{lang}wcf.search.results.change{/lang}</span></a></li></ul>
+						<li><a href="{link controller='Search'}modify={@$searchID}{/link}" class="button"><img src="{icon size='M'}search1{/icon}" alt="" /> <span>{lang}wcf.search.results.change{/lang}</span></a></li></ul>
 					{/if}
 					{event name='largeButtonsTop'}
 				{/content}
@@ -52,7 +52,7 @@
 			<ul class="largeButtons">
 				{content}
 					{if $alterable}
-						<li><a href="{link controller='Search'}modify={@$searchID}{/link}"><img src="{icon size='M'}search1{/icon}" alt="" /> <span>{lang}wcf.search.results.change{/lang}</span></a></li></ul>
+						<li><a href="{link controller='Search'}modify={@$searchID}{/link}" class="button"><img src="{icon size='M'}search1{/icon}" alt="" /> <span>{lang}wcf.search.results.change{/lang}</span></a></li></ul>
 					{/if}
 					{event name='largeButtonsBottom'}
 				{/content}
@@ -75,7 +75,7 @@
 						<input type="hidden" name="pageNo" value="{@$pageNo}" />
 						<input type="hidden" name="highlight" value="{$highlight}" />
 						
-						<div class="floatedElement">
+						<div class="floated">
 							<label for="sortField">{lang}wcf.search.sortBy{/lang}</label>
 							<select id="sortField" name="sortField">
 								<option value="relevance"{if $sortField == 'relevance'} selected="selected"{/if}>{lang}wcf.search.sortBy.relevance{/lang}</option>
@@ -90,10 +90,10 @@
 							</select>
 						</div>
 						
-						<div class="floatedElement">
+						<div class="floated">
 						{if $additionalDisplayOptions|isset}{@$additionalDisplayOptions}{/if}						
 						</div>
-						<div class="floatedElement">
+						<div class="floated">
 							<input type="image" class="inputImage" src="{icon}submitS.png{/icon}" alt="{lang}wcf.global.button.submit{/lang}" />
 						</div>
 
