@@ -76,6 +76,8 @@ class SearchForm extends RecaptchaForm {
 	public $searchID = 0;
 	public $modifySearchID = 0;
 	public $modifySearch = null;
+	public $searchIndexCondition = null;
+	public $additionalConditions = array();
 	
 	/**
 	 * @see wcf\page\IPage::readParameters()
@@ -162,7 +164,7 @@ class SearchForm extends RecaptchaForm {
 		parent::validate();
 		
 		// get search conditions
-		$conditions = $this->getConditions();
+		$this->getConditions();
 		
 		// check query and author
 		if (empty($this->query) && empty($this->username) && !$this->userID) {
@@ -170,7 +172,7 @@ class SearchForm extends RecaptchaForm {
 		}
 		
 		// build search hash
-		$this->searchHash = StringUtil::getHash(serialize(array($this->query, $this->selectedObjectTypes, !$this->subjectOnly, $conditions, $this->sortField.' '.$this->sortOrder, PACKAGE_ID)));
+		$this->searchHash = StringUtil::getHash(serialize(array($this->query, $this->selectedObjectTypes, !$this->subjectOnly, $this->searchIndexCondition, $this->additionalConditions, $this->sortField.' '.$this->sortOrder, PACKAGE_ID)));
 		
 		// check search hash
 		if (!empty($this->query)) {
@@ -193,7 +195,7 @@ class SearchForm extends RecaptchaForm {
 		}
 		
 		// do search
-		$this->results = SearchEngine::getInstance()->search($this->query, $this->selectedObjectTypes, $this->subjectOnly, $conditions, $this->sortField.' '.$this->sortOrder);
+		$this->results = SearchEngine::getInstance()->search($this->query, $this->selectedObjectTypes, $this->subjectOnly, $this->searchIndexCondition, $this->additionalConditions, $this->sortField.' '.$this->sortOrder);
 		
 		// result is empty
 		if (count($this->results) == 0) {
@@ -307,17 +309,26 @@ class SearchForm extends RecaptchaForm {
 	}
 	
 	/**
-	 * Returns the conditions for a search in the table of the selected object types.
+	 * Gets the conditions for a search in the table of the selected object types.
 	 */
 	protected function getConditions() {
-		$conditions = array();
-		
 		if (!count($this->selectedObjectTypes)) {
 			$this->selectedObjectTypes = array_keys(SearchEngine::getInstance()->getAvailableObjectTypes());
 		}
 		
-		// get user ids
+		// default conditions
 		$userIDs = $this->getUserIDs();
+		$this->searchIndexCondition = new PreparedStatementConditionBuilder(false);
+	
+		// user ids
+		if (count($userIDs)) {
+			$this->searchIndexCondition->add('search_index.userID IN (?)', array($userIDs));
+		}
+		
+		// dates
+		if (($startDate = strtotime($this->startDate)) && ($endDate = strtotime($this->endDate))) {
+			$this->searchIndexCondition->add('search_index.time BETWEEN ? AND ?', array(strtotime($startDate), strtotime($endDate)));
+		}
 		
 		foreach ($this->selectedObjectTypes as $key => $objectTypeName) {
 			$objectType = SearchEngine::getInstance()->getObjectType($objectTypeName);
@@ -325,39 +336,25 @@ class SearchForm extends RecaptchaForm {
 				throw new SystemException('unknown search object type '.$objectTypeName);
 			}
 			
-			$conditionBuilder = new PreparedStatementConditionBuilder(false);
 			try {
 				if (!$objectType->isAccessible()) {
 					throw new PermissionDeniedException();
 				}
-
-				// default conditions
-				// user ids
-				if (count($userIDs)) {
-					$conditionBuilder->add('search_index.userID IN (?)', array($userIDs));
-				}
-				
-				// dates
-				if (($startDate = strtotime($this->startDate)) && ($endDate = strtotime($this->endDate))) {
-					$conditionBuilder->add('search_index.time BETWEEN ? AND ?', array(strtotime($startDate), strtotime($endDate)));
-				}
 				
 				// special conditions
-				$objectType->getConditions($conditionBuilder);
+				if (($conditionBuilder = $objectType->getConditions($this)) !== null) {
+					$this->additionalConditions[$objectTypeName] = $conditionBuilder;
+				}
 			}
 			catch (PermissionDeniedException $e) {
 				unset($this->selectedObjectTypes[$key]);
 				continue;
 			}
-			
-			$conditions[$objectTypeName] = $conditionBuilder;
 		}
 		
 		if (!count($this->selectedObjectTypes)) {
 			$this->throwNoMatchesException();
 		}
-		
-		return $conditions;
 	}
 	
 	/**

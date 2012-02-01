@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\search;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -50,16 +51,17 @@ class SearchEngine extends SingletonFactory {
 		return null;
 	}
 	
-	public function search($q, array $objectTypes, $subjectOnly = false, array $additionalConditions = array(), $orderBy = 'time DESC', $limit = 1000) {
+	public function search($q, array $objectTypes, $subjectOnly = false, PreparedStatementConditionBuilder $searchIndexCondition = null, array $additionalConditions = array(), $orderBy = 'time DESC', $limit = 1000) {
 		// handle sql types
-		$fulltextConditionString = '';
+		$fulltextCondition = null;
 		if (!empty($q)) {
+			$fulltextCondition = new PreparedStatementConditionBuilder(false);
 			switch (WCF::getDB()->getDBType()) {
 				case 'wcf\system\database\MySQLDatabase':
-					$fulltextConditionString = "MATCH (search_index.subject".(!$subjectOnly ? ', search_index.message, search_index.metaData' : '').") AGAINST (? IN BOOLEAN MODE)";
+					$fulltextCondition->add("MATCH (subject".(!$subjectOnly ? ', message, metaData' : '').") AGAINST (? IN BOOLEAN MODE)", array($q));
 				break;
 				case 'wcf\system\database\PostgreSQLDatabase':
-					$fulltextConditionString = "to_tsvector(search_index.subject".(!$subjectOnly ? " || ' ' || search_index.message || ' ' || search_index.metaData" : '').") @@ to_tsquery(?)";
+					$fulltextCondition->add("to_tsvector(subject".(!$subjectOnly ? " || ' ' || message || ' ' || metaData" : '').") @@ to_tsquery(?)", array($q));
 				break;
 				default:
 					throw new SystemException("your database type doesn't support fulltext search");
@@ -71,18 +73,35 @@ class SearchEngine extends SingletonFactory {
 		$parameters = array();
 		foreach ($objectTypes as $objectTypeName) {
 			$objectType = $this->getObjectType($objectTypeName);
-			$idFieldName = $objectType->getIDFieldName();
 			if (!empty($sql)) $sql .= "\nUNION\n";
-			
-			$sql .= "(	SELECT		".($idFieldName ? "DISTINCT ".$idFieldName." AS objectID" : 'search_index.objectID').", search_index.subject, search_index.time, search_index.username,
+			if (($specialSQL = $objectType->getSpecialSQLQuery($fulltextCondition, $searchIndexCondition, (isset($additionalConditions[$objectTypeName]) ? $additionalConditions[$objectTypeName] : null), $orderBy))) {
+				$sql .= "(".$specialSQL.")";
+			}
+			else {
+				$sql .= "(
+					SELECT		".$objectType->getTableName().".".$objectType->getIDFieldName()." AS objectID,
+							".$objectType->getTableName().".".$objectType->getSubjectFieldName()." AS subject,
+							".$objectType->getTableName().".".$objectType->getTimeFieldName()." AS time,
+							".$objectType->getTableName().".".$objectType->getUsernameFieldName()." AS username,
 							'".$objectTypeName."' AS objectType
-					FROM 		wcf".WCF_N."_search_index search_index
-							".$objectType->getJoins()."
-					WHERE		".$fulltextConditionString."
-							".((isset($additionalConditions[$objectTypeName]) && $additionalConditions[$objectTypeName]->__toString()) ? " ".(!empty($q) ? "AND" : "")." (".$additionalConditions[$objectTypeName].")" : "")."
-			)";
+					FROM		".$objectType->getTableName()."
+					INNER JOIN 	(
+								SELECT		objectID
+								FROM		wcf".WCF_N."_search_index
+								WHERE		".($fulltextCondition !== null ? $fulltextCondition : '')."
+										".(($searchIndexCondition !== null && $searchIndexCondition->__toString()) ? ($fulltextCondition !== null ? "AND " : '').$searchIndexCondition : '')."
+										AND objectTypeID = ".$objectType->objectTypeID."
+								ORDER BY	".$orderBy."
+								LIMIT		1000
+							) search_index
+					ON 		(".$objectType->getTableName().".".$objectType->getIDFieldName()." = search_index.objectID)
+					".$objectType->getJoins()."
+					".(isset($additionalConditions[$objectTypeName]) ? $additionalConditions[$objectTypeName] : '')."
+				)";
+			}
 			
-			if (!empty($q)) $parameters[] = $q;
+			if ($fulltextCondition !== null) $parameters = array_merge($parameters, $fulltextCondition->getParameters());
+			if ($searchIndexCondition !== null) $parameters = array_merge($parameters, $searchIndexCondition->getParameters());
 			if (isset($additionalConditions[$objectTypeName])) $parameters = array_merge($parameters, $additionalConditions[$objectTypeName]->getParameters());
 		}
 		if (empty($sql)) {
@@ -92,7 +111,7 @@ class SearchEngine extends SingletonFactory {
 		if (!empty($orderBy)) {
 			$sql .= " ORDER BY " . $orderBy;
 		}
-		
+		echo $sql;
 		// send search query
 		$messages = array();
 		$statement = WCF::getDB()->prepareStatement($sql, $limit);

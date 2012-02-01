@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\search;
+use wcf\data\object\type\AbstractObjectTypeProcessor;
 use wcf\form\IForm;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 
@@ -13,7 +14,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
  * @subpackage	system.search
  * @category 	Community Framework
  */
-abstract class AbstractSearchableObjectType implements ISearchableObjectType {
+abstract class AbstractSearchableObjectType extends AbstractObjectTypeProcessor implements ISearchableObjectType {
 	/**
 	 * @see wcf\system\search\ISearchableObjectType::show()
 	 */
@@ -22,7 +23,9 @@ abstract class AbstractSearchableObjectType implements ISearchableObjectType {
 	/**
 	 * @see wcf\system\search\ISearchableObjectType::getConditions()
 	 */
-	public function getConditions(PreparedStatementConditionBuilder $conditionBuilder, IForm $form = null) {}
+	public function getConditions(IForm $form = null) {
+		return null;
+	}
 	
 	/**
 	 * @see wcf\system\search\ISearchableObjectType::getJoins()
@@ -32,10 +35,24 @@ abstract class AbstractSearchableObjectType implements ISearchableObjectType {
 	}
 
 	/**
-	 * @see wcf\system\search\ISearchableObjectType::getIDFieldName()
+	 * @see wcf\system\search\ISearchableObjectType::getSubjectFieldName()
 	 */
-	public function getIDFieldName() {
-		return '';
+	public function getSubjectFieldName() {
+		return 'subject';
+	}
+	
+	/**
+	 * @see wcf\system\search\ISearchableObjectType::getUsernameFieldName()
+	 */
+	public function getUsernameFieldName() {
+		return 'username';
+	}
+	
+	/**
+	 * @see wcf\system\search\ISearchableObjectType::getTimeFieldName()
+	 */
+	public function getTimeFieldName() {
+		return 'time';
 	}
 	
 	/**
@@ -56,6 +73,13 @@ abstract class AbstractSearchableObjectType implements ISearchableObjectType {
 	 * @see wcf\system\search\ISearchableObjectType::getFormTemplateName()
 	 */
 	public function getFormTemplateName() {
+		return '';
+	}
+	
+	/**
+	 * @see wcf\system\search\ISearchableObjectType::getSpecialSQLQuery()
+	 */
+	public function getSpecialSQLQuery(PreparedStatementConditionBuilder $fulltextCondition, PreparedStatementConditionBuilder $searchIndexConditions, PreparedStatementConditionBuilder $additionalConditions, $orderBy) {
 		return '';
 	}
 }

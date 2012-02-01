@@ -40,10 +40,10 @@ interface ISearchableObjectType {
 	/**
 	 * Returns the search conditions of this message type.
 	 * 
-	 * @param	wcf\system\database\util\PreparedStatementConditionBuilder	$conditionBuilder
-	 * @param	wcf\form\IForm							$form
+	 * @param	wcf\form\IForm			$form
+	 * @return	wcf\system\database\util\PreparedStatementConditionBuilder
 	 */
-	public function getConditions(PreparedStatementConditionBuilder $conditionBuilder, IForm $form = null);
+	public function getConditions(IForm $form = null);
 	
 	/**
 	 * Provides the ability to add additional joins to sql search query. 
@@ -53,11 +53,39 @@ interface ISearchableObjectType {
 	public function getJoins();
 	
 	/**
+	 * Returns the database table name of this message.
+	 * 
+	 * @return	string
+	 */
+	public function getTableName();
+	
+	/**
 	 * Returns the database field name of the message id.
 	 * 
 	 * @return	string
 	 */
 	public function getIDFieldName();
+	
+	/**
+	 * Returns the database field name of the subject field.
+	 * 
+	 * @return	string
+	 */
+	public function getSubjectFieldName();
+	
+	/**
+	 * Returns the database field name of the username.
+	 * 
+	 * @return	string
+	 */
+	public function getUsernameFieldName();
+	
+	/**
+	 * Returns the database field name of the time.
+	 * 
+	 * @return	string
+	 */
+	public function getTimeFieldName();
 	
 	/**
 	 * Returns additional search information.
@@ -86,4 +114,15 @@ interface ISearchableObjectType {
 	 * @return	string
 	 */
 	public function getResultTemplateName();
+	
+	/**
+	 * Provides the option to replace the default search index SQL query by an own version. 
+	 * 
+	 * @param	wcf\system\database\util\PreparedStatementConditionBuilder	$fulltextCondition
+	 * @param	wcf\system\database\util\PreparedStatementConditionBuilder	$searchIndexConditions
+	 * @param	wcf\system\database\util\PreparedStatementConditionBuilder	$additionalConditions
+	 * @param	string								$orderBy
+	 * @return	string
+	 */
+	public function getSpecialSQLQuery(PreparedStatementConditionBuilder $fulltextCondition, PreparedStatementConditionBuilder $searchIndexConditions, PreparedStatementConditionBuilder $additionalConditions, $orderBy);
 }
