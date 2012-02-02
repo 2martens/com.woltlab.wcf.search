@@ -111,7 +111,7 @@ class SearchEngine extends SingletonFactory {
 		if (!empty($orderBy)) {
 			$sql .= " ORDER BY " . $orderBy;
 		}
-		echo $sql;
+		
 		// send search query
 		$messages = array();
 		$statement = WCF::getDB()->prepareStatement($sql, $limit);
