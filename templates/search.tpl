@@ -9,7 +9,7 @@
 <body id="tpl{$templateName|ucfirst}">
 {include file='header' sandbox=false}
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{icon size='L'}search1{/icon}" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.search.title{/lang}</h1>
@@ -17,15 +17,15 @@
 </header>
 
 {if $errorField}
-	<p class="error">{lang}wcf.global.form.error{/lang}</p>
+	<p class="wcf-error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
 {if $errorMessage|isset}
-	<p class="error">{@$errorMessage}</p>
+	<p class="wcf-error">{@$errorMessage}</p>
 {/if}
 
 <form method="post" action="{link controller='Search'}{/link}">
-	<div class="border content">
+	<div class="wcf-border wcf-content">
 		<fieldset>
 			<legend>{lang}wcf.search.general{/lang}</legend>
 	
@@ -120,7 +120,7 @@
 		{/foreach}
 	</div>
 	
-	<div class="formSubmit">
+	<div class="wcf-formSubmit">
 		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SID_INPUT_TAG}

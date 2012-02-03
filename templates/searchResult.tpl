@@ -9,7 +9,7 @@
 <body id="tpl{$templateName|ucfirst}">
 {include file='header' sandbox=false}
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{icon size='L'}search1{/icon}" alt="" />
 	<hgroup>
 		<h1>{if $query}<a href="{link controller='Search'}q={$query|urlencode}{/link}">{lang}wcf.search.results{/lang}</a>{else}{lang}wcf.search.results{/lang}{/if}</h1>
@@ -17,16 +17,16 @@
 	</hgroup>
 </header>
 	
-<div class="contentHeader">
+<div class="wcf-contentHeader">
 	{assign var=encodedHighlight value=$highlight|urlencode}
 	{pages print=true assign=pagesLinks controller='SearchResult' id=$searchID link="pageNo=%d&highlight=$encodedHighlight"}
 	
 	{hascontent}
 		<nav>
-			<ul class="largeButtons">
+			<ul class="wcf-largeButtons">
 				{content}
 					{if $alterable}
-						<li><a href="{link controller='Search'}modify={@$searchID}{/link}" class="button"><img src="{icon size='M'}search1{/icon}" alt="" /> <span>{lang}wcf.search.results.change{/lang}</span></a></li></ul>
+						<li><a href="{link controller='Search'}modify={@$searchID}{/link}" class="wcf-button"><img src="{icon size='M'}search1{/icon}" alt="" /> <span>{lang}wcf.search.results.change{/lang}</span></a></li></ul>
 					{/if}
 					{event name='largeButtonsTop'}
 				{/content}
@@ -44,15 +44,15 @@
 	{assign var=startIndex value=$startIndex+1}
 {/foreach}
 	
-<div class="contentFooter">
+<div class="wcf-contentFooter">
 	{@$pagesLinks}
 	
 	{hascontent}
 		<nav>
-			<ul class="largeButtons">
+			<ul class="wcf-largeButtons">
 				{content}
 					{if $alterable}
-						<li><a href="{link controller='Search'}modify={@$searchID}{/link}" class="button"><img src="{icon size='M'}search1{/icon}" alt="" /> <span>{lang}wcf.search.results.change{/lang}</span></a></li></ul>
+						<li><a href="{link controller='Search'}modify={@$searchID}{/link}" class="wcf-button"><img src="{icon size='M'}search1{/icon}" alt="" /> <span>{lang}wcf.search.results.change{/lang}</span></a></li></ul>
 					{/if}
 					{event name='largeButtonsBottom'}
 				{/content}
@@ -62,9 +62,9 @@
 </div>	
 	
 {*if $alterable}
-	<div class="border infoBox">
-		<div class="container-1">
-			<div class="containerIcon"><img src="{icon}sortM.png{/icon}" alt="" /> </div>
+	<div class="wcf-border wcf-infoBox">
+		<div>
+			<div class="containerIcon"><img src="{icon}sort1.svg{/icon}" alt="" /> </div>
 			<div class="containerContent">
 				<h3>{lang}wcf.search.results.display{/lang}</h3>
 				<form method="post" action="index.php">
