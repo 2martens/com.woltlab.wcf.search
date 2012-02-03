@@ -29,7 +29,7 @@
 		<fieldset>
 			<legend>{lang}wcf.search.general{/lang}</legend>
 	
-			<dl{if $errorField == 'q'} class="formError"{/if}>
+			<dl{if $errorField == 'q'} class="wcf-formError"{/if}>
 				<dt><label for="searchTerm">{lang}wcf.search.query{/lang}</label></dt>
 				<dd>
 					<input type="text" id="searchTerm" name="q" value="{$query}" class="long" maxlength="255" autofocus="autofocus" placeholder="{lang}wcf.search.query{/lang}" />
