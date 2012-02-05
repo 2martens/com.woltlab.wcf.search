@@ -8,7 +8,7 @@
 	</div>
 </aside>
 
-<script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/WCF.Search.Message.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath('wcf')}js/WCF.Search.Message.js"></script>
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
