@@ -244,23 +244,23 @@ class SearchForm extends RecaptchaForm {
 			'alterable' => (!$this->userID ? 1 : 0)
 		);
 		if ($this->modifySearchID) {
-			$searchAction = new SearchAction(array($this->modifySearchID), 'update', array('data' => array(
+			$this->objectAction = new SearchAction(array($this->modifySearchID), 'update', array('data' => array(
 				'searchData' => serialize($this->searchData),
 				'searchTime' => TIME_NOW,
 				'searchType' => 'messages',
 				'searchHash' => $this->searchHash
 			)));
-			$searchAction->executeAction();
+			$this->objectAction->executeAction();
 		}
 		else {
-			$searchAction = new SearchAction(array(), 'create', array('data' => array(
+			$this->objectAction = new SearchAction(array(), 'create', array('data' => array(
 				'userID' => (WCF::getUser()->userID ?: null),
 				'searchData' => serialize($this->searchData),
 				'searchTime' => TIME_NOW,
 				'searchType' => 'messages',
 				'searchHash' => $this->searchHash
 			)));
-			$resultValues = $searchAction->executeAction();
+			$resultValues = $this->objectAction->executeAction();
 			$this->searchID = $resultValues['returnValues']->searchID;
 		}
 		// save keyword
