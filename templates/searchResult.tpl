@@ -9,9 +9,9 @@
 <body id="tpl{$templateName|ucfirst}">
 {include file='header' sandbox=false}
 
-<header class="wcf-mainHeading">
-	<img src="{icon size='L'}search1{/icon}" alt="" />
-	<hgroup>
+<header class="wcf-container wcf-mainHeading">
+	<img src="{icon size='L'}search1{/icon}" alt="" class="wcf-containerIcon" />
+	<hgroup class="wcf-containerContainer">
 		<h1>{if $query}<a href="{link controller='Search'}q={$query|urlencode}{/link}">{lang}wcf.search.results{/lang}</a>{else}{lang}wcf.search.results{/lang}{/if}</h1>
 		<h2>{lang}wcf.search.results.description{/lang}</h2>
 	</hgroup>

@@ -9,9 +9,9 @@
 <body id="tpl{$templateName|ucfirst}">
 {include file='header' sandbox=false}
 
-<header class="wcf-mainHeading">
-	<img src="{icon size='L'}search1{/icon}" alt="" />
-	<hgroup>
+<header class="wcf-container wcf-mainHeading">
+	<img src="{icon size='L'}search1{/icon}" alt="" class="wcf-containerIcon" />
+	<hgroup class="wcf-containerContent">
 		<h1>{lang}wcf.search.title{/lang}</h1>
 	</hgroup>
 </header>
