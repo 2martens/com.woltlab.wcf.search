@@ -30,18 +30,18 @@ WCF.Search.Message.SearchArea.prototype = {
 		this._inputDimensions = this._searchArea.find('input').getDimensions();
 		
 		// set default values
-		this._searchArea.css('right', ((this._inputDimensions.width + 82) * -1) + 'px');
+		this._searchArea.css('right', ((this._inputDimensions.width + 60) * -1) + 'px');
 		
 		// set events
 		this._searchArea.find('img').click($.proxy(function() {
 			if (this._searchArea.css('right') == '-50px') {
 				this._searchArea.animate({
-					right: '-='+(this._inputDimensions.width + 32)
+					right: '-='+(this._inputDimensions.width + 10)
 				});
 			}
 			else {
 				this._searchArea.animate({
-					right: '+='+(this._inputDimensions.width + 32)
+					right: '+='+(this._inputDimensions.width + 10)
 				}, 100, $.proxy(function() {
 					this._searchArea.find('input').focus();
 				}, this));
