@@ -24,6 +24,6 @@
 		<instruction type="sql">install.sql</instruction>
 		<instruction type="objectTypeDefinition">objectTypeDefinition.xml</instruction>
 		<instruction type="templateListener">templateListener.xml</instruction>
-		<instruction type="option">options.xml</instruction>
+		<instruction type="option">option.xml</instruction>
 	</instructions>
 </package>
