@@ -25,7 +25,7 @@
 {/if}
 
 <form method="post" action="{link controller='Search'}{/link}">
-	<div class="wcf-border wcf-content">
+	<div class="wcf-box wcf-marginTop wcf-boxPadding wcf-shadow1">
 		<fieldset>
 			<legend>{lang}wcf.search.general{/lang}</legend>
 	

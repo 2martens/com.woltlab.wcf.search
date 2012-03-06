@@ -62,7 +62,7 @@
 </div>	
 	
 {*if $alterable}
-	<div class="wcf-border wcf-infoBox">
+	<div class="wcf-infoBox wcf-box wcf-marginTop wcf-boxPadding wcf-shadow1">
 		<div>
 			<div class="containerIcon"><img src="{icon}sort1.svg{/icon}" alt="" /> </div>
 			<div class="containerContent">
