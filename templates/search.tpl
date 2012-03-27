@@ -9,30 +9,30 @@
 <body id="tpl{$templateName|ucfirst}">
 {include file='header' sandbox=false}
 
-<header class="wcf-container wcf-mainHeading">
-	<img src="{icon size='L'}search1{/icon}" alt="" class="wcf-containerIcon" />
-	<hgroup class="wcf-containerContent">
+<header class="box48 boxHeadline">
+	<img src="{icon size='L'}search1{/icon}" alt="" class="icon48" />
+	<hgroup>
 		<h1>{lang}wcf.search.title{/lang}</h1>
 	</hgroup>
 </header>
 
 {if $errorField}
-	<p class="wcf-error">{lang}wcf.global.form.error{/lang}</p>
+	<p class="error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
 {if $errorMessage|isset}
-	<p class="wcf-error">{@$errorMessage}</p>
+	<p class="error">{@$errorMessage}</p>
 {/if}
 
 <form method="post" action="{link controller='Search'}{/link}">
-	<div class="wcf-box wcf-marginTop wcf-boxPadding wcf-shadow1">
+	<div class="container containerPadding marginTop shadow">
 		<fieldset>
 			<legend>{lang}wcf.search.general{/lang}</legend>
 	
-			<dl{if $errorField == 'q'} class="wcf-formError"{/if}>
+			<dl{if $errorField == 'q'} class="formError"{/if}>
 				<dt><label for="searchTerm">{lang}wcf.search.query{/lang}</label></dt>
 				<dd>
-					<input type="text" id="searchTerm" name="q" value="{$query}" class="long" maxlength="255" autofocus="autofocus" placeholder="{lang}wcf.search.query{/lang}" />
+					<input type="text" id="searchTerm" name="q" value="{$query}" class="long" maxlength="255" autofocus="autofocus" />
 					<label><input type="checkbox" name="subjectOnly" value="1"{if $subjectOnly == 1} checked="checked"{/if} /> {lang}wcf.search.subjectOnly{/lang}</label>
 					{event name='queryOptions'}
 					
@@ -120,8 +120,7 @@
 		{/foreach}
 	</div>
 	
-	<div class="wcf-formSubmit">
-		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
+	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SID_INPUT_TAG}
  	</div>

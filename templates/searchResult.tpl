@@ -9,24 +9,24 @@
 <body id="tpl{$templateName|ucfirst}">
 {include file='header' sandbox=false}
 
-<header class="wcf-container wcf-mainHeading">
-	<img src="{icon size='L'}search1{/icon}" alt="" class="wcf-containerIcon" />
-	<hgroup class="wcf-containerContent">
+<header class="box48 boxHeadline">
+	<img src="{icon size='L'}search1{/icon}" alt="" class="icon48" />
+	<hgroup>
 		<h1>{if $query}<a href="{link controller='Search'}q={$query|urlencode}{/link}">{lang}wcf.search.results{/lang}</a>{else}{lang}wcf.search.results{/lang}{/if}</h1>
 		<h2>{lang}wcf.search.results.description{/lang}</h2>
 	</hgroup>
 </header>
 	
-<div class="wcf-contentHeader">
+<div class="contentNavigation">
 	{assign var=encodedHighlight value=$highlight|urlencode}
 	{pages print=true assign=pagesLinks controller='SearchResult' id=$searchID link="pageNo=%d&highlight=$encodedHighlight"}
 	
 	{hascontent}
 		<nav>
-			<ul class="wcf-largeButtons">
+			<ul>
 				{content}
 					{if $alterable}
-						<li><a href="{link controller='Search'}modify={@$searchID}{/link}" class="wcf-button"><img src="{icon size='M'}search1{/icon}" alt="" /> <span>{lang}wcf.search.results.change{/lang}</span></a></li></ul>
+						<li><a href="{link controller='Search'}modify={@$searchID}{/link}" class="button"><img src="{icon size='M'}search1{/icon}" class="icon24" alt="" /> <span>{lang}wcf.search.results.change{/lang}</span></a></li></ul>
 					{/if}
 					{event name='largeButtonsTop'}
 				{/content}
@@ -44,15 +44,15 @@
 	{assign var=startIndex value=$startIndex+1}
 {/foreach}
 	
-<div class="wcf-contentFooter">
+<div class="contentNavigation">
 	{@$pagesLinks}
 	
 	{hascontent}
 		<nav>
-			<ul class="wcf-largeButtons">
+			<ul>
 				{content}
 					{if $alterable}
-						<li><a href="{link controller='Search'}modify={@$searchID}{/link}" class="wcf-button"><img src="{icon size='M'}search1{/icon}" alt="" /> <span>{lang}wcf.search.results.change{/lang}</span></a></li></ul>
+						<li><a href="{link controller='Search'}modify={@$searchID}{/link}" class="button"><img src="{icon size='M'}search1{/icon}" class="icon24" alt="" /> <span>{lang}wcf.search.results.change{/lang}</span></a></li></ul>
 					{/if}
 					{event name='largeButtonsBottom'}
 				{/content}
