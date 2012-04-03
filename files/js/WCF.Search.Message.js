@@ -21,32 +21,9 @@ WCF.Search.Message.KeywordList = WCF.Search.Base.extend({
 WCF.Search.Message.SearchArea = function(searchArea) { this.init(searchArea); };
 WCF.Search.Message.SearchArea.prototype = {
 	_searchArea: null,
-	_inputDimensions: null,
 		
 	init: function(searchArea) {
 		this._searchArea = searchArea;
-		
-		// get dimensions of the input field
-		this._inputDimensions = this._searchArea.find('input').getDimensions();
-		
-		// set default values
-		this._searchArea.css('right', ((this._inputDimensions.width + 50) * -1) + 'px');
-		
-		// set events
-		this._searchArea.find('img').click($.proxy(function() {
-			if (this._searchArea.css('right') == '-40px') {
-				this._searchArea.animate({
-					right: '-='+(this._inputDimensions.width + 10)
-				});
-			}
-			else {
-				this._searchArea.animate({
-					right: '+='+(this._inputDimensions.width + 10)
-				}, 100, $.proxy(function() {
-					this._searchArea.find('input').focus();
-				}, this));
-			}
-		}, this));
 		
 		new WCF.Search.Message.KeywordList(this._searchArea.find('input'), $.proxy(this._callback, this));
 	},
