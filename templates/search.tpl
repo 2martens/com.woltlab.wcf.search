@@ -9,8 +9,7 @@
 <body id="tpl{$templateName|ucfirst}">
 {include file='header' sandbox=false}
 
-<header class="box48 boxHeadline">
-	<img src="{icon size='L'}search1{/icon}" alt="" class="icon48" />
+<header class="boxHeadline">
 	<hgroup>
 		<h1>{lang}wcf.search.title{/lang}</h1>
 	</hgroup>
