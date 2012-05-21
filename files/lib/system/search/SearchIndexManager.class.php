@@ -54,15 +54,18 @@ class SearchIndexManager extends SingletonFactory {
 	 * @param	integer		$time
 	 * @param	integer		$userID
 	 * @param	string		$username
+	 * @param	integer		$languageID
 	 * @param	string		$metaData
 	 */
-	public function add($objectType, $objectID, $message, $subject, $time, $userID, $username, $metaData = '') {
+	public function add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = 0, $metaData = '') {
+		if ($languageID === null) $languageID = 0;
+		
 		// save new entry
 		$sql = "INSERT INTO	wcf".WCF_N."_search_index
-					(objectTypeID, objectID, subject, message, time, userID, username, metaData)
+					(objectTypeID, objectID, subject, message, time, userID, username, languageID, metaData)
 			VALUES		(?, ?, ?, ?, ?, ?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->getObjectTypeID($objectType), $objectID, $subject, $message, $time, $userID, $username, $metaData));
+		$statement->execute(array($this->getObjectTypeID($objectType), $objectID, $subject, $message, $time, $userID, $username, $languageID, $metaData));
 	}
 	
 	/**
