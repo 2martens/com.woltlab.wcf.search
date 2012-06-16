@@ -15,6 +15,8 @@
 	</hgroup>
 </header>
 
+{include file='userNotice'}
+
 {if $errorField}
 	<p class="error">{lang}wcf.global.form.error{/lang}</p>
 {/if}

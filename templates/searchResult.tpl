@@ -16,6 +16,8 @@
 	</hgroup>
 </header>
 	
+{include file='userNotice'}
+	
 <div class="contentNavigation">
 	{assign var=encodedHighlight value=$highlight|urlencode}
 	{pages print=true assign=pagesLinks controller='SearchResult' id=$searchID link="pageNo=%d&highlight=$encodedHighlight"}
