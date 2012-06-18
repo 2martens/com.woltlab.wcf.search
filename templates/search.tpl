@@ -53,8 +53,8 @@
 			<dl>
 				<dt><label for="startDate">{lang}wcf.search.period{/lang}</label></dt>
 				<dd>
-					<input type="date" id="startDate" name="startDate" value="{$startDate}" />
-					- <input type="date" id="endDate" name="endDate" value="{$endDate}" />
+					<input type="date" id="startDate" name="startDate" value="{$startDate}" placeholder="{lang}wcf.search.period.start{/lang}" />
+					<input type="date" id="endDate" name="endDate" value="{$endDate}" placeholder="{lang}wcf.search.period.end{/lang}" />
 					
 					<small>{lang}wcf.search.period.description{/lang}</small>
 				</dd>
@@ -81,14 +81,12 @@
 			
 			<dl>
 				<dt>{lang}wcf.search.type{/lang}</dt>
-				<dd>
-					<ul class="formOptions">
+				<dd class="floated">
 					{foreach from=$objectTypes key=objectTypeName item=objectType}
 						{if $objectType->isAccessible()}
-							<li><label><input id="{@'.'|str_replace:'_':$objectTypeName}" type="checkbox" name="types[]" value="{@$objectTypeName}"{if $objectTypeName|in_array:$selectedObjectTypes} checked="checked"{/if} /> {lang}wcf.search.type.{@$objectTypeName}{/lang}</label></li>
+							<label><input id="{@'.'|str_replace:'_':$objectTypeName}" type="checkbox" name="types[]" value="{@$objectTypeName}"{if $objectTypeName|in_array:$selectedObjectTypes} checked="checked"{/if} /> {lang}wcf.search.type.{@$objectTypeName}{/lang}</label>
 						{/if}
 					{/foreach}
-					</ul>
 				</dd>
 			</dl>
 		</fieldset>
@@ -102,7 +100,7 @@
 				<fieldset id="{@$__jsID}Form">
 					<legend>{lang}wcf.search.type.{@$objectTypeName}{/lang}</legend>
 					
-					<div>{include file=$objectType->getFormTemplateName()}</div>
+					{include file=$objectType->getFormTemplateName()}
 				
 					<script type="text/javascript">
 						//<![CDATA[
@@ -123,8 +121,7 @@
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-		{@SID_INPUT_TAG}
- 	</div>
+	</div>
 </form>
 
 {include file='footer' sandbox=false}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="de">
+	<category name="wcf.search">
+		<item name="wcf.search.author"><![CDATA[Suche nach Autor]]></item>
+		<item name="wcf.search.general"><![CDATA[Allgemeine Suchangaben]]></item>
+		<item name="wcf.search.period"><![CDATA[Im Zeitraum]]></item>
+		<item name="wcf.search.period.end"><![CDATA[bis]]></item>
+		<item name="wcf.search.period.start"><![CDATA[von]]></item>
+		<item name="wcf.search.query"><![CDATA[Suche nach Begriff]]></item>
+		<item name="wcf.search.query.description"><![CDATA[Geben Sie einen oder mehrere Begriffe ein. Ein Begriff muss mindestens vier Zeichen lang sein.]]></item>
+		<item name="wcf.search.subjectOnly"><![CDATA[Nur Betreff durchsuchen]]></item>
+		<item name="wcf.search.title"><![CDATA[Suche]]></item>
+		<item name="wcf.search.type"><![CDATA[Suche in]]></item>
+	</category>
+</language>

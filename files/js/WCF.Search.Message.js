@@ -25,7 +25,7 @@ WCF.Search.Message.SearchArea.prototype = {
 	init: function(searchArea) {
 		this._searchArea = searchArea;
 		
-		new WCF.Search.Message.KeywordList(this._searchArea.find('input'), $.proxy(this._callback, this));
+		//new WCF.Search.Message.KeywordList(this._searchArea.find('input'), $.proxy(this._callback, this));
 	},
 
 	_callback: function(data) {

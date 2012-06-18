@@ -60,13 +60,13 @@ class SearchForm extends RecaptchaForm {
 	 * start date
 	 * @var integer
 	 */
-	public $startDate = 0;
+	public $startDate = '';
 	
 	/**
 	 * end date
 	 * @var integer
 	 */
-	public $endDate = 0;
+	public $endDate = '';
 	
 	public $submit = false;
 	public $nameExactly = 1;
