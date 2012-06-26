@@ -61,7 +61,7 @@ class SearchEngine extends SingletonFactory {
 					$fulltextCondition->add("MATCH (subject".(!$subjectOnly ? ', message, metaData' : '').") AGAINST (? IN BOOLEAN MODE)", array($q));
 				break;
 				case 'wcf\system\database\PostgreSQLDatabase':
-					$fulltextCondition->add("to_tsvector(subject".(!$subjectOnly ? " || ' ' || message || ' ' || metaData" : '').") @@ to_tsquery(?)", array($q));
+					$fulltextCondition->add("fulltextIndex".($subjectOnly ? "SubjectOnly" : '')." @@ to_tsquery(?)", array($q));
 				break;
 				default:
 					throw new SystemException("your database type doesn't support fulltext search");
@@ -91,8 +91,7 @@ class SearchEngine extends SingletonFactory {
 								WHERE		".($fulltextCondition !== null ? $fulltextCondition : '')."
 										".(($searchIndexCondition !== null && $searchIndexCondition->__toString()) ? ($fulltextCondition !== null ? "AND " : '').$searchIndexCondition : '')."
 										AND objectTypeID = ".$objectType->objectTypeID."
-								ORDER BY	".$orderBy."
-								LIMIT		1000
+								LIMIT		".SEARCH_QUERY_INNER_LIMIT."
 							) search_index
 					ON 		(".$objectType->getTableName().".".$objectType->getIDFieldName()." = search_index.objectID)
 					".$objectType->getJoins()."

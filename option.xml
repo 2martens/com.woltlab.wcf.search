@@ -34,6 +34,13 @@ username:wcf.search.sortBy.author]]></selectoptions>
 				<selectoptions><![CDATA[ASC:wcf.global.sortOrder.ascending
 DESC:wcf.global.sortOrder.descending]]></selectoptions>
 			</option>
+			
+			<option name="search_query_inner_limit">
+				<categoryname>message.search</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>1000</defaultvalue>
+				<validationpattern>^\d{3,5}$</validationpattern>
+			</option>
 		</options>
 	</import>
 </data>

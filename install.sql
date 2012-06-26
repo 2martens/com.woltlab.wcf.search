@@ -10,8 +10,8 @@ CREATE TABLE wcf1_search_index (
 	username VARCHAR(255) NOT NULL DEFAULT '',
 	languageID INT(10) NOT NULL DEFAULT 0,
 	UNIQUE KEY (objectTypeID, objectID),
-	FULLTEXT INDEX (subject, message, metaData),
-	FULLTEXT INDEX (subject),
+	FULLTEXT INDEX fulltextIndex (subject, message, metaData),
+	FULLTEXT INDEX fulltextIndexSubjectOnly (subject),
 	KEY (userID),
 	KEY (username)
 );
