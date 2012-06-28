@@ -37,7 +37,7 @@
 					<label><input type="checkbox" name="subjectOnly" value="1"{if $subjectOnly == 1} checked="checked"{/if} /> {lang}wcf.search.subjectOnly{/lang}</label>
 					{event name='queryOptions'}
 					
-					<small>{lang}wcf.search.query.description{/lang}</small>
+					<p><small>{lang}wcf.search.query.description{/lang}</small></p>
 				</dd>
 			</dl>
 			
@@ -55,6 +55,7 @@
 				<dd>
 					<input type="date" id="startDate" name="startDate" value="{$startDate}" placeholder="{lang}wcf.search.period.start{/lang}" />
 					<input type="date" id="endDate" name="endDate" value="{$endDate}" placeholder="{lang}wcf.search.period.end{/lang}" />
+					{event name='periodOptions'}
 					
 					<small>{lang}wcf.search.period.description{/lang}</small>
 				</dd>
@@ -74,10 +75,11 @@
 						<option value="ASC"{if $sortOrder == 'ASC'} selected="selected"{/if}>{lang}wcf.global.sortOrder.ascending{/lang}</option>
 						<option value="DESC"{if $sortOrder == 'DESC'} selected="selected"{/if}>{lang}wcf.global.sortOrder.descending{/lang}</option>
 					</select>
+					{event name='displayOptions'}
 				</dd>
 			</dl>
 			
-			{event name='options'}
+			{event name='fields'}
 			
 			<dl>
 				<dt>{lang}wcf.search.type{/lang}</dt>
@@ -91,7 +93,7 @@
 			</dl>
 		</fieldset>
 		
-		{event name='fields'}
+		{event name='fieldsets'}
 		{if $useCaptcha}{include file='recaptcha'}{/if}
 		
 		{foreach from=$objectTypes key=objectTypeName item=objectType}
