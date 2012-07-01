@@ -11,5 +11,15 @@
 		<item name="wcf.search.subjectOnly"><![CDATA[Nur Betreff durchsuchen]]></item>
 		<item name="wcf.search.title"><![CDATA[Suche]]></item>
 		<item name="wcf.search.type"><![CDATA[Suche in]]></item>
+		<item name="wcf.search.extended"><![CDATA[Erweiterte Suche]]></item>
+		<item name="wcf.search.matchExactly"><![CDATA[Exakter Treffer]]></item>
+		<item name="wcf.search.sortBy"><![CDATA[Sortierung]]></item>
+		<item name="wcf.search.sortBy.relevance"><![CDATA[Relevanz]]></item>
+		<item name="wcf.search.sortBy.subject"><![CDATA[Betreff]]></item>
+		<item name="wcf.search.sortBy.time"><![CDATA[Datum]]></item>
+		<item name="wcf.search.sortBy.username"><![CDATA[Autor]]></item>
+		<item name="wcf.search.results"><![CDATA[Suchergebnisse]]></item>
+		<item name="wcf.search.results.change"><![CDATA[Suche ändern]]></item>
+		<item name="wcf.search.results.description"><![CDATA[Suchergebnisse {#$startIndex}-{#$endIndex} von insgesamt {#$items}{if $query} für &bdquo;<strong>{$query}</strong>&ldquo;{/if}.{if $items == 1000} Es gibt noch weitere Suchergebnisse, bitte verfeinern Sie Ihre Suche.{/if}{if $highlight}<br />Diese Suchbegriffe wurden hervorgehoben: <span class="highlight">{$highlight}</span>{/if}]]></item>
 	</category>
 </language>

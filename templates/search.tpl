@@ -56,8 +56,6 @@
 					<input type="date" id="startDate" name="startDate" value="{$startDate}" placeholder="{lang}wcf.search.period.start{/lang}" />
 					<input type="date" id="endDate" name="endDate" value="{$endDate}" placeholder="{lang}wcf.search.period.end{/lang}" />
 					{event name='periodOptions'}
-					
-					<small>{lang}wcf.search.period.description{/lang}</small>
 				</dd>
 			</dl>
 			
@@ -67,8 +65,8 @@
 					<select id="sortField" name="sortField">
 						<option value="relevance"{if $sortField == 'relevance'} selected="selected"{/if}>{lang}wcf.search.sortBy.relevance{/lang}</option>
 						<option value="subject"{if $sortField == 'subject'} selected="selected"{/if}>{lang}wcf.search.sortBy.subject{/lang}</option>
-						<option value="time"{if $sortField == 'time'} selected="selected"{/if}>{lang}wcf.search.sortBy.creationDate{/lang}</option>
-						<option value="username"{if $sortField == 'username'} selected="selected"{/if}>{lang}wcf.search.sortBy.author{/lang}</option>
+						<option value="time"{if $sortField == 'time'} selected="selected"{/if}>{lang}wcf.search.sortBy.time{/lang}</option>
+						<option value="username"{if $sortField == 'username'} selected="selected"{/if}>{lang}wcf.search.sortBy.username{/lang}</option>
 					</select>
 					
 					<select name="sortOrder">
