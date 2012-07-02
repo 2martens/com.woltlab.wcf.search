@@ -27,7 +27,7 @@
 			<ul>
 				{content}
 					{if $alterable}
-						<li><a href="{link controller='Search'}modify={@$searchID}{/link}" class="button"><img src="{icon size='M'}search{/icon}" class="icon24" alt="" /> <span>{lang}wcf.search.results.change{/lang}</span></a></li></ul>
+						<li><a href="{link controller='Search'}modify={@$searchID}{/link}" class="button"><img src="{icon size='M'}search{/icon}" class="icon24" alt="" /> <span>{lang}wcf.search.results.change{/lang}</span></a></li>
 					{/if}
 					{event name='largeButtonsTop'}
 				{/content}
@@ -53,7 +53,7 @@
 			<ul>
 				{content}
 					{if $alterable}
-						<li><a href="{link controller='Search'}modify={@$searchID}{/link}" class="button"><img src="{icon size='M'}search{/icon}" class="icon24" alt="" /> <span>{lang}wcf.search.results.change{/lang}</span></a></li></ul>
+						<li><a href="{link controller='Search'}modify={@$searchID}{/link}" class="button"><img src="{icon size='M'}search{/icon}" class="icon24" alt="" /> <span>{lang}wcf.search.results.change{/lang}</span></a></li>
 					{/if}
 					{event name='largeButtonsBottom'}
 				{/content}
@@ -62,53 +62,6 @@
 	{/hascontent}
 </div>	
 	
-{*if $alterable}
-	<div class="wcf-infoBox wcf-box wcf-marginTop wcf-boxPadding wcf-shadow1">
-		<div>
-			<div class="containerIcon"><img src="{icon}sort1.svg{/icon}" alt="" /> </div>
-			<div class="containerContent">
-				<h3>{lang}wcf.search.results.display{/lang}</h3>
-				<form method="post" action="index.php">
-					
-					<div class="floatContainer">
-						<input type="hidden" name="form" value="Search" />
-						<input type="hidden" name="searchID" value="{@$searchID}" />
-						<input type="hidden" name="pageNo" value="{@$pageNo}" />
-						<input type="hidden" name="highlight" value="{$highlight}" />
-						
-						<div class="floated">
-							<label for="sortField">{lang}wcf.search.sortBy{/lang}</label>
-							<select id="sortField" name="sortField">
-								<option value="relevance"{if $sortField == 'relevance'} selected="selected"{/if}>{lang}wcf.search.sortBy.relevance{/lang}</option>
-								<option value="subject"{if $sortField == 'subject'} selected="selected"{/if}>{lang}wcf.search.sortBy.subject{/lang}</option>
-								<option value="time"{if $sortField == 'time'} selected="selected"{/if}>{lang}wcf.search.sortBy.creationDate{/lang}</option>
-								<option value="username"{if $sortField == 'username'} selected="selected"{/if}>{lang}wcf.search.sortBy.author{/lang}</option>
-							</select>
-						
-							<select name="sortOrder">
-								<option value="ASC"{if $sortOrder == 'ASC'} selected="selected"{/if}>{lang}wcf.global.sortOrder.ascending{/lang}</option>
-								<option value="DESC"{if $sortOrder == 'DESC'} selected="selected"{/if}>{lang}wcf.global.sortOrder.descending{/lang}</option>
-							</select>
-						</div>
-						
-						<div class="floated">
-						{if $additionalDisplayOptions|isset}{@$additionalDisplayOptions}{/if}						
-						</div>
-						<div class="floated">
-							<input type="image" class="inputImage" src="{icon}submitS.png{/icon}" alt="{lang}wcf.global.button.submit{/lang}" />
-						</div>
-
-						<input type="hidden" name="modify" value="1" />
-						{@SID_INPUT_TAG}
-					</div>
-				</form>
-			</div>
-		</div>
-		
-		{if $additionalBoxes|isset}{@$additionalBoxes}{/if}
-	</div>
-{/if*}
-
 {include file='footer' sandbox=false}
 </body>
 </html>

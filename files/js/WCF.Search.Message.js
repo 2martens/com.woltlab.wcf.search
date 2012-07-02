@@ -29,6 +29,7 @@ WCF.Search.Message.KeywordList = WCF.Search.Base.extend({
 			return;
 		}
 		
+		this._triggerLength = 3;
 		this._callback = callback;
 		this._excludedSearchValues = [];
 		if (excludedSearchValues) {
