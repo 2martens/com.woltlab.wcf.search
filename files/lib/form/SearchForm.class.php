@@ -20,17 +20,17 @@ class SearchForm extends RecaptchaForm {
 	/**
 	 * @see wcf\page\SortablePage::$sortField
 	 */
-	public $sortField = 'time';//SEARCH_DEFAULT_SORT_FIELD;
+	public $sortField = SEARCH_DEFAULT_SORT_FIELD;
 	
 	/**
 	 * @see wcf\page\SortablePage::$sortOrder
 	 */
-	public $sortOrder = 'DESC';//SEARCH_DEFAULT_SORT_ORDER;
+	public $sortOrder = SEARCH_DEFAULT_SORT_ORDER;
 	
 	/**
 	 * @see wcf\form\RecaptchaForm::$useCaptcha
 	 */
-	public $useCaptcha = false;//SEARCH_USE_CAPTCHA;
+	public $useCaptcha = SEARCH_USE_CAPTCHA;
 	
 	/**
 	 * search query
@@ -154,8 +154,8 @@ class SearchForm extends RecaptchaForm {
 		$this->nameExactly = 0;
 		if (isset($_POST['nameExactly'])) $this->nameExactly = intval($_POST['nameExactly']);
 		if (isset($_POST['subjectOnly'])) $this->subjectOnly = intval($_POST['subjectOnly']);
-		if (isset($_POST['startDate'])) $this->startDate = strtotime($_POST['startDate']);
-		if (isset($_POST['endDate'])) $this->endDate = strtotime($_POST['endDate']);
+		if (isset($_POST['startDate'])) $this->startDate = $_POST['startDate'];
+		if (isset($_POST['endDate'])) $this->endDate = $_POST['endDate'];
 	}
 	
 	/**
@@ -323,12 +323,12 @@ class SearchForm extends RecaptchaForm {
 	
 		// user ids
 		if (count($userIDs)) {
-			$this->searchIndexCondition->add('search_index.userID IN (?)', array($userIDs));
+			$this->searchIndexCondition->add('userID IN (?)', array($userIDs));
 		}
 		
 		// dates
 		if (($startDate = strtotime($this->startDate)) && ($endDate = strtotime($this->endDate))) {
-			$this->searchIndexCondition->add('search_index.time BETWEEN ? AND ?', array(strtotime($startDate), strtotime($endDate)));
+			$this->searchIndexCondition->add('time BETWEEN ? AND ?', array($startDate, $endDate));
 		}
 		
 		foreach ($this->selectedObjectTypes as $key => $objectTypeName) {
@@ -374,10 +374,10 @@ class SearchForm extends RecaptchaForm {
 			$statement = WCF::getDB()->prepareStatement($sql, 100);
 			$statement->execute(array($this->username.(!$this->nameExactly ? '%' : '')));
 			while ($row = $statement->fetchArray()) {
-				$this->userIDs[] = $row['userID'];
+				$userIDs[] = $row['userID'];
 			}
 			
-			if (!count($this->userIDs)) {
+			if (!count($userIDs)) {
 				$this->throwNoMatchesException();
 			}
 		}

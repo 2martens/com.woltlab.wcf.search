@@ -91,6 +91,7 @@ class SearchEngine extends SingletonFactory {
 								WHERE		".($fulltextCondition !== null ? $fulltextCondition : '')."
 										".(($searchIndexCondition !== null && $searchIndexCondition->__toString()) ? ($fulltextCondition !== null ? "AND " : '').$searchIndexCondition : '')."
 										AND objectTypeID = ".$objectType->objectTypeID."
+								".(!empty($orderBy) && $fulltextCondition === null ? 'ORDER BY '.$orderBy : '')."
 								LIMIT		".SEARCH_QUERY_INNER_LIMIT."
 							) search_index
 					ON 		(".$objectType->getTableName().".".$objectType->getIDFieldName()." = search_index.objectID)

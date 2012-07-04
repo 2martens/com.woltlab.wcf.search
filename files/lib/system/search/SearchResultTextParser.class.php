@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\search;
 use wcf\system\bbcode\KeywordHighlighter;
+use wcf\system\Regex;
 use wcf\system\SingletonFactory;
 use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
@@ -69,8 +70,8 @@ class SearchResultTextParser extends SingletonFactory {
 	 */
 	protected function getMessageAbstract($text) {
 		// replace newlines with spaces
-		$text = preg_replace("/\s+/", ' ', $text);
-	
+		$text = Regex::compile("\s+")->replace($text, ' ');
+		
 		if (StringUtil::length($text) > static::MAX_LENGTH) {
 			if ($this->searchQuery) {
 				// phrase search
@@ -186,6 +187,9 @@ class SearchResultTextParser extends SingletonFactory {
 	 * @return	string
 	 */
 	public function parse($text) {
+		// remove nonessentials
+		$text = Regex::compile('<!-- begin:parser_nonessential -->.*?<!-- end:parser_nonessential -->', Regex::DOT_ALL)->replace($text, '');
+		
 		// remove html codes
 		$text = StringUtil::stripHTML($text);
 		

@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\search;
 use wcf\data\search\keyword\SearchKeyword;
-
 use wcf\data\search\keyword\SearchKeywordAction;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;

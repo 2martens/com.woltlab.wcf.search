@@ -12,8 +12,8 @@ CREATE TABLE wcf1_search_index (
 	UNIQUE KEY (objectTypeID, objectID),
 	FULLTEXT INDEX fulltextIndex (subject, message, metaData),
 	FULLTEXT INDEX fulltextIndexSubjectOnly (subject),
-	KEY (userID),
-	KEY (username)
+	KEY (userID, objectTypeID, time)
+	--todo: KEY (userID, languageID, objectTypeID, time)
 );
 
 DROP TABLE IF EXISTS wcf1_search_keyword;

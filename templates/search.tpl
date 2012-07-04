@@ -44,7 +44,7 @@
 			<dl>
 				<dt><label for="searchAuthor">{lang}wcf.search.author{/lang}</label></dt>
 				<dd>
-					<input type="text" id="searchAuthor" name="username" value="{$username}" class="long" maxlength="255" />
+					<input type="text" id="searchAuthor" name="username" value="{$username}" class="long" maxlength="255" autocomplete="off" />
 					<label><input type="checkbox" name="nameExactly" value="1"{if $nameExactly == 1} checked="checked"{/if} /> {lang}wcf.search.matchExactly{/lang}</label>
 					{event name='authorOptions'}
 				</dd>
@@ -106,7 +106,6 @@
 						//<![CDATA[
 						$(function() {
 							$('#{@$__jsID}').click(function() {
-								console.debug('test');
 								if (this.checked) $('#{@$__jsID}Form').wcfFadeIn();
 								else $('#{@$__jsID}Form').wcfFadeOut();
 							});
@@ -125,6 +124,16 @@
 </form>
 
 {include file='footer' sandbox=false}
+
+<script type="text/javascript">
+	//<![CDATA[
+	$(function() {
+		new WCF.Search.User($('#searchAuthor'), function(data) {
+			$('#searchAuthor').val(data.label);//.focus();
+		});
+	});
+	//]]>
+</script>
 
 </body>
 </html>
