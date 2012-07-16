@@ -3,11 +3,12 @@
 <head>
 	<title>{lang}wcf.search.results{/lang} - {PAGE_TITLE|language}</title>
 	
-	{include file='headInclude' sandbox=false}
+	{include file='headInclude'}
 </head>
 
 <body id="tpl{$templateName|ucfirst}">
-{include file='header' sandbox=false}
+
+{include file='header'}
 
 <header class="boxHeadline">
 	<hgroup>
@@ -62,6 +63,7 @@
 	{/hascontent}
 </div>	
 	
-{include file='footer' sandbox=false}
+{include file='footer'}
+
 </body>
 </html>
