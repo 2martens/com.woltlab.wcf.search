@@ -54,6 +54,7 @@ class SearchEngine extends SingletonFactory {
 	public function search($q, array $objectTypes, $subjectOnly = false, PreparedStatementConditionBuilder $searchIndexCondition = null, array $additionalConditions = array(), $orderBy = 'time DESC', $limit = 1000) {
 		// handle sql types
 		$fulltextCondition = null;
+		$relevanceCalc = '';
 		if (!empty($q)) {
 			$fulltextCondition = new PreparedStatementConditionBuilder(false);
 			switch (WCF::getDB()->getDBType()) {
@@ -65,6 +66,17 @@ class SearchEngine extends SingletonFactory {
 				break;
 				default:
 					throw new SystemException("your database type doesn't support fulltext search");
+			}
+			
+			if ($orderBy == 'relevance ASC' || $orderBy == 'relevance DESC') {
+				switch (WCF::getDB()->getDBType()) {
+					case 'wcf\system\database\MySQLDatabase':
+						$relevanceCalc = "MATCH (subject".(!$subjectOnly ? ', message, metaData' : '').") AGAINST ('".escapeString($q)."') + (5 / (1 + POW(LN(1 + (".TIME_NOW." - time) / 2592000), 2))) AS relevance";
+					break;
+					case 'wcf\system\database\PostgreSQLDatabase':
+						$relevanceCalc = "ts_rank_cd(fulltextIndex".($subjectOnly ? "SubjectOnly" : '').", '".escapeString($q)."') AS relevance";
+					break;
+				}
 			}
 		}
 		
@@ -79,14 +91,16 @@ class SearchEngine extends SingletonFactory {
 			}
 			else {
 				$sql .= "(
-					SELECT		".$objectType->getTableName().".".$objectType->getIDFieldName()." AS objectID,
-							".$objectType->getTableName().".".$objectType->getSubjectFieldName()." AS subject,
-							".$objectType->getTableName().".".$objectType->getTimeFieldName()." AS time,
-							".$objectType->getTableName().".".$objectType->getUsernameFieldName()." AS username,
+					SELECT		".$objectType->getIDFieldName()." AS objectID,
+							".$objectType->getSubjectFieldName()." AS subject,
+							".$objectType->getTimeFieldName()." AS time,
+							".$objectType->getUsernameFieldName()." AS username,
 							'".$objectTypeName."' AS objectType
+							".($relevanceCalc ? ',search_index.relevance' : '')."
 					FROM		".$objectType->getTableName()."
 					INNER JOIN 	(
 								SELECT		objectID
+										".($relevanceCalc ? ','.$relevanceCalc : '')."
 								FROM		wcf".WCF_N."_search_index
 								WHERE		".($fulltextCondition !== null ? $fulltextCondition : '')."
 										".(($searchIndexCondition !== null && $searchIndexCondition->__toString()) ? ($fulltextCondition !== null ? "AND " : '').$searchIndexCondition : '')."
@@ -94,7 +108,7 @@ class SearchEngine extends SingletonFactory {
 								".(!empty($orderBy) && $fulltextCondition === null ? 'ORDER BY '.$orderBy : '')."
 								LIMIT		".SEARCH_QUERY_INNER_LIMIT."
 							) search_index
-					ON 		(".$objectType->getTableName().".".$objectType->getIDFieldName()." = search_index.objectID)
+					ON 		(".$objectType->getIDFieldName()." = search_index.objectID)
 					".$objectType->getJoins()."
 					".(isset($additionalConditions[$objectTypeName]) ? $additionalConditions[$objectTypeName] : '')."
 				)";

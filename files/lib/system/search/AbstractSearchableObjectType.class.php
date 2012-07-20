@@ -38,21 +38,21 @@ abstract class AbstractSearchableObjectType extends AbstractObjectTypeProcessor 
 	 * @see wcf\system\search\ISearchableObjectType::getSubjectFieldName()
 	 */
 	public function getSubjectFieldName() {
-		return 'subject';
+		return $this->getTableName().'.subject';
 	}
 	
 	/**
 	 * @see wcf\system\search\ISearchableObjectType::getUsernameFieldName()
 	 */
 	public function getUsernameFieldName() {
-		return 'username';
+		return $this->getTableName().'.username';
 	}
 	
 	/**
 	 * @see wcf\system\search\ISearchableObjectType::getTimeFieldName()
 	 */
 	public function getTimeFieldName() {
-		return 'time';
+		return $this->getTableName().'.time';
 	}
 	
 	/**
