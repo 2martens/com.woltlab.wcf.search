@@ -3,11 +3,12 @@
 <head>
 	<title>{lang}wcf.search.title{/lang} - {PAGE_TITLE|language}</title>
 
-	{include file='headInclude' sandbox=false}
+	{include file='headInclude'}
 </head>
 
 <body id="tpl{$templateName|ucfirst}">
-{include file='header' sandbox=false}
+
+{include file='header'}
 
 <header class="boxHeadline">
 	<hgroup>
@@ -123,7 +124,7 @@
 	</div>
 </form>
 
-{include file='footer' sandbox=false}
+{include file='footer'}
 
 <script type="text/javascript">
 	//<![CDATA[
