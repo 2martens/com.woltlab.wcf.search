@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\search\keyword;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\ISearchAction;
+use wcf\system\exception\ValidateActionException;
 use wcf\system\WCF;
 
 /**
@@ -13,17 +15,30 @@ use wcf\system\WCF;
  * @subpackage	data.search.keyword
  * @category 	Community Framework
  */
-class SearchKeywordAction extends AbstractDatabaseObjectAction {
+class SearchKeywordAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\search\keyword\SearchKeywordEditor';
 	
-	protected $allowGuestAccess = array('getList');
+	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 */
+	protected $allowGuestAccess = array('getSearchResultList');
 	
-	public function validateGetList() {}
+	/**
+	 * @see	wcf\data\IPositionAction::validateGetSearchResultList()
+	 */
+	public function validateGetSearchResultList() {
+		if (!isset($this->parameters['data']['searchString'])) {
+			throw new ValidateActionException("Missing parameter 'searchString'");
+		}
+	}
 	
-	public function getList() {
+	/**
+	 * @see	wcf\data\IPositionAction::getSearchResultList()
+	 */
+	public function getSearchResultList() {
 		$searchString = $this->parameters['data']['searchString'];
 		$list = array();
 	
