@@ -28,7 +28,7 @@
 			<ul>
 				{content}
 					{if $alterable}
-						<li><a href="{link controller='Search'}modify={@$searchID}{/link}" class="button"><img src="{icon size='M'}search{/icon}" class="icon24" alt="" /> <span>{lang}wcf.search.results.change{/lang}</span></a></li>
+						<li><a href="{link controller='Search'}modify={@$searchID}{/link}" class="button"><img src="{icon}search{/icon}" class="icon24" alt="" /> <span>{lang}wcf.search.results.change{/lang}</span></a></li>
 					{/if}
 					{event name='largeButtonsTop'}
 				{/content}
@@ -54,7 +54,7 @@
 			<ul>
 				{content}
 					{if $alterable}
-						<li><a href="{link controller='Search'}modify={@$searchID}{/link}" class="button"><img src="{icon size='M'}search{/icon}" class="icon24" alt="" /> <span>{lang}wcf.search.results.change{/lang}</span></a></li>
+						<li><a href="{link controller='Search'}modify={@$searchID}{/link}" class="button"><img src="{icon}search{/icon}" class="icon24" alt="" /> <span>{lang}wcf.search.results.change{/lang}</span></a></li>
 					{/if}
 					{event name='largeButtonsBottom'}
 				{/content}
