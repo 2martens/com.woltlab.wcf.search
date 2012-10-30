@@ -24,3 +24,5 @@ CREATE TABLE wcf1_search_keyword (
 	lastSearchTime INT(10) NOT NULL DEFAULT 0,
 	UNIQUE KEY (keyword)
 );
+
+ALTER TABLE wcf1_search_index ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;

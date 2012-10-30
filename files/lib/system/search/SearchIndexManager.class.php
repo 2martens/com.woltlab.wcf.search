@@ -78,14 +78,15 @@ class SearchIndexManager extends SingletonFactory {
 	 * @param	integer		$time
 	 * @param	integer		$userID
 	 * @param	string		$username
+	 * @param	integer		$languageID
 	 * @param	string		$metaData
 	 */
-	public function update($objectType, $objectID, $message, $subject, $time, $userID, $username, $metaData = '') {
+	public function update($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = 0, $metaData = '') {
 		// delete existing entry
-		$this->delete($objectType, array($objectID));
+		$this->delete($objectType, array($objectID), ($languageID === null ? 0 : $languageID));
 		
 		// save new entry
-		$this->add($objectType, $objectID, $message, $subject, $time, $userID, $username, $metaData);
+		$this->add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);
 	}
 	
 	/**
@@ -93,17 +94,22 @@ class SearchIndexManager extends SingletonFactory {
 	 * 
 	 * @param	string		$objectType
 	 * @param	array<integer>	$objectIDs
+	 * @param	integer		$languageID
 	 */
-	public function delete($objectType, array $objectIDs) {
+	public function delete($objectType, array $objectIDs, $languageID = null) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
 		
 		$sql = "DELETE FROM	wcf".WCF_N."_search_index
 			WHERE		objectTypeID = ?
-					AND objectID = ?";
+					AND objectID = ?
+					".($languageID !== null ? "AND languageID = ?" : "");
 		$statement = WCF::getDB()->prepareStatement($sql);
 		WCF::getDB()->beginTransaction();
 		foreach ($objectIDs as $objectID) {
-			$statement->execute(array($objectTypeID, $objectID));
+			$parameters = array($objectTypeID, $objectID);
+			if ($languageID !== null) $parameters[] = $languageID;
+			
+			$statement->execute($parameters);
 		}
 		WCF::getDB()->commitTransaction();
 	}
