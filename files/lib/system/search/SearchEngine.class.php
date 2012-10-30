@@ -8,23 +8,23 @@ use wcf\system\WCF;
 
 /**
  * SearchEngine searches for given query in the selected object types.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf.search
  * @subpackage	system.search
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class SearchEngine extends SingletonFactory {
 	/**
 	 * list of available object types
-	 * @var array
+	 * @var	array
 	 */
 	protected $availableObjectTypes = array();
 	
 	/**
-	 * @see wcf\system\SingletonFactory::init()
+	 * @see	wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		// get available object types
@@ -39,18 +39,38 @@ class SearchEngine extends SingletonFactory {
 	/**
 	 * Returns a list of available object types.
 	 * 
-	 * @return array
+	 * @return	array
 	 */
 	public function getAvailableObjectTypes() {
 		return $this->availableObjectTypes;
 	}
 	
+	/**
+	 * Returns the object type with the given name.
+	 * 
+	 * @param	string		$objectTypeName
+	 * @return	wcf\data\object\type\ObjectType
+	 */
 	public function getObjectType($objectTypeName) {
-		if (isset($this->availableObjectTypes[$objectTypeName])) return $this->availableObjectTypes[$objectTypeName];
+		if (isset($this->availableObjectTypes[$objectTypeName])) {
+			return $this->availableObjectTypes[$objectTypeName];
+		}
 		
 		return null;
 	}
 	
+	/**
+	 * Searches for the given string and returns the data of the found messages.
+	 * 
+	 * @param	string								$q
+	 * @param	array								$objectTypes
+	 * @param	boolean								$subjectOnly
+	 * @param	wcf\system\database\util\PreparedStatementConditionBuilder	$searchIndexCondition
+	 * @param	array								$additionalConditions
+	 * @param	string								$orderBy
+	 * @param	integer								$limit
+	 * @return	array
+	 */
 	public function search($q, array $objectTypes, $subjectOnly = false, PreparedStatementConditionBuilder $searchIndexCondition = null, array $additionalConditions = array(), $orderBy = 'time DESC', $limit = 1000) {
 		// handle sql types
 		$fulltextCondition = null;
@@ -61,9 +81,11 @@ class SearchEngine extends SingletonFactory {
 				case 'wcf\system\database\MySQLDatabase':
 					$fulltextCondition->add("MATCH (subject".(!$subjectOnly ? ', message, metaData' : '').") AGAINST (? IN BOOLEAN MODE)", array($q));
 				break;
+				
 				case 'wcf\system\database\PostgreSQLDatabase':
 					$fulltextCondition->add("fulltextIndex".($subjectOnly ? "SubjectOnly" : '')." @@ to_tsquery(?)", array($q));
 				break;
+				
 				default:
 					throw new SystemException("your database type doesn't support fulltext search");
 			}
@@ -73,6 +95,7 @@ class SearchEngine extends SingletonFactory {
 					case 'wcf\system\database\MySQLDatabase':
 						$relevanceCalc = "MATCH (subject".(!$subjectOnly ? ', message, metaData' : '').") AGAINST ('".escapeString($q)."') + (5 / (1 + POW(LN(1 + (".TIME_NOW." - time) / 2592000), 2))) AS relevance";
 					break;
+					
 					case 'wcf\system\database\PostgreSQLDatabase':
 						$relevanceCalc = "ts_rank_cd(fulltextIndex".($subjectOnly ? "SubjectOnly" : '').", '".escapeString($q)."') AS relevance";
 					break;
@@ -131,7 +154,10 @@ class SearchEngine extends SingletonFactory {
 		$statement = WCF::getDB()->prepareStatement($sql, $limit);
 		$statement->execute($parameters);
 		while ($row = $statement->fetchArray()) {
-			$messages[] = array('objectID' => $row['objectID'], 'objectType' => $row['objectType']);
+			$messages[] = array(
+				'objectID' => $row['objectID'],
+				'objectType' => $row['objectType']
+			);
 		}
 		
 		return $messages;

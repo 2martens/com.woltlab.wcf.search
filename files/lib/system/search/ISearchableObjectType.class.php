@@ -11,7 +11,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf.search
  * @subpackage	system.search
- * @category 	Community Framework
+ * @category	Community Framework
  */
 interface ISearchableObjectType {
 	/**

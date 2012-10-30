@@ -71,25 +71,24 @@ WCF.Search.Message.KeywordList = WCF.Search.Base.extend({
 		this._list.hide().empty();
 		
 		WCF.CloseOverlayHandler.removeCallback('WCF.Search.Base');
-	},
+	}
 });
 
 /**
  * 
  */
-WCF.Search.Message.SearchArea = function(searchArea) { this.init(searchArea); };
-WCF.Search.Message.SearchArea.prototype = {
+WCF.Search.Message.SearchArea = Class.extend({
 	_searchArea: null,
-		
+	
 	init: function(searchArea) {
 		this._searchArea = searchArea;
 		
 		new WCF.Search.Message.KeywordList(this._searchArea.find('input[type=search]'), $.proxy(this._callback, this));
 	},
-
+	
 	_callback: function(data) {
 		this._searchArea.find('input').val(data.label);
 		this._searchArea.find('input').focus();
 		return false;
 	}
-};
+});

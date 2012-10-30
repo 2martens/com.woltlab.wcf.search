@@ -2,24 +2,24 @@
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="de">
 	<category name="wcf.search">
 		<item name="wcf.search.author"><![CDATA[Suche nach Autor]]></item>
+		<item name="wcf.search.extended"><![CDATA[Erweiterte Suche]]></item>
 		<item name="wcf.search.general"><![CDATA[Allgemeine Suchangaben]]></item>
+		<item name="wcf.search.matchExactly"><![CDATA[Exakter Treffer]]></item>
 		<item name="wcf.search.period"><![CDATA[Im Zeitraum]]></item>
 		<item name="wcf.search.period.end"><![CDATA[bis]]></item>
 		<item name="wcf.search.period.start"><![CDATA[von]]></item>
 		<item name="wcf.search.query"><![CDATA[Suche nach Begriff]]></item>
 		<item name="wcf.search.query.description"><![CDATA[Geben Sie einen oder mehrere Begriffe ein. Ein Begriff muss mindestens vier Zeichen lang sein.]]></item>
-		<item name="wcf.search.subjectOnly"><![CDATA[Nur Betreff durchsuchen]]></item>
-		<item name="wcf.search.title"><![CDATA[Suche]]></item>
-		<item name="wcf.search.type"><![CDATA[Suche in]]></item>
-		<item name="wcf.search.extended"><![CDATA[Erweiterte Suche]]></item>
-		<item name="wcf.search.matchExactly"><![CDATA[Exakter Treffer]]></item>
+		<item name="wcf.search.results"><![CDATA[Suchergebnisse]]></item>
+		<item name="wcf.search.results.change"><![CDATA[Suche ändern]]></item>
+		<item name="wcf.search.results.description"><![CDATA[Suchergebnisse {#$startIndex}-{#$endIndex} von insgesamt {#$items}{if $query} für &bdquo;<strong>{$query}</strong>&ldquo;{/if}.{if $items == 1000} Es gibt noch weitere Suchergebnisse, bitte verfeinern Sie Ihre Suche.{/if}{if $highlight}<br />Diese Suchbegriffe wurden hervorgehoben: <span class="highlight">{$highlight}</span>{/if}]]></item>
 		<item name="wcf.search.sortBy"><![CDATA[Sortierung]]></item>
 		<item name="wcf.search.sortBy.relevance"><![CDATA[Relevanz]]></item>
 		<item name="wcf.search.sortBy.subject"><![CDATA[Betreff]]></item>
 		<item name="wcf.search.sortBy.time"><![CDATA[Datum]]></item>
 		<item name="wcf.search.sortBy.username"><![CDATA[Autor]]></item>
-		<item name="wcf.search.results"><![CDATA[Suchergebnisse]]></item>
-		<item name="wcf.search.results.change"><![CDATA[Suche ändern]]></item>
-		<item name="wcf.search.results.description"><![CDATA[Suchergebnisse {#$startIndex}-{#$endIndex} von insgesamt {#$items}{if $query} für &bdquo;<strong>{$query}</strong>&ldquo;{/if}.{if $items == 1000} Es gibt noch weitere Suchergebnisse, bitte verfeinern Sie Ihre Suche.{/if}{if $highlight}<br />Diese Suchbegriffe wurden hervorgehoben: <span class="highlight">{$highlight}</span>{/if}]]></item>
+		<item name="wcf.search.subjectOnly"><![CDATA[Nur Betreff durchsuchen]]></item>
+		<item name="wcf.search.title"><![CDATA[Suche]]></item>
+		<item name="wcf.search.type"><![CDATA[Suche in]]></item>
 	</category>
 </language>

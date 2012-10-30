@@ -14,46 +14,46 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf.search
  * @subpackage	page
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class SearchResultPage extends MultipleLinkPage {
 	/**
 	 * @see wcf\page\MultipleLinkPage::$itemsPerPage
 	 */
-	public $itemsPerPage = 20;//SEARCH_RESULTS_PER_PAGE;
+	public $itemsPerPage = SEARCH_RESULTS_PER_PAGE;
 	
 	/**
 	 * highlight string
-	 * @var string
+	 * @var	string
 	 */
 	public $highlight = '';
 	
 	/**
 	 * search id
-	 * @var integer
+	 * @var	integer
 	 */
 	public $searchID = 0;
 	
 	/**
 	 * search object
-	 * @var wcf\data\search\Search
+	 * @var	wcf\data\search\Search
 	 */
 	public $search = null;
 	
 	/**
 	 * messages
-	 * @var array
+	 * @var	array
 	 */
 	public $messages = array();
 	
 	/**
 	 * search data
-	 * @var array
+	 * @var	array
 	 */
 	public $searchData = null;
 	
 	/**
-	 * @see wcf\page\IPage::readParameters()
+	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -145,7 +145,7 @@ class SearchResultPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see wcf\page\MultipleLinkPage::countItems()
+	 * @see	wcf\page\MultipleLinkPage::countItems()
 	 */
 	public function countItems() {
 		// call countItems event
@@ -156,11 +156,11 @@ class SearchResultPage extends MultipleLinkPage {
 	
 	/**
 	 * @see	wcf\page\MultipleLinkPage::initObjectList()
-	 */		
+	 */
 	protected function initObjectList() { }
 	
 	/**
 	 * @see	wcf\page\MultipleLinkPage::readObjects()
-	 */	
+	 */
 	protected function readObjects() { }
 }

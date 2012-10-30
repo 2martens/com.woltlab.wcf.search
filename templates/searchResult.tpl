@@ -16,9 +16,9 @@
 		<h2>{lang}wcf.search.results.description{/lang}</h2>
 	</hgroup>
 </header>
-	
+
 {include file='userNotice'}
-	
+
 <div class="contentNavigation">
 	{assign var=encodedHighlight value=$highlight|urlencode}
 	{pages print=true assign=pagesLinks controller='SearchResult' id=$searchID link="pageNo=%d&highlight=$encodedHighlight"}
@@ -36,16 +36,16 @@
 		</nav>
 	{/hascontent}
 </div>
-	
+
 {assign var=i value=0}
 {assign var=length value=$messages|count}
-	
+
 {foreach from=$messages item=item}
 	{include file=$objectTypes[$item.type]->getResultTemplateName()}
 	{assign var=i value=$i+1}
 	{assign var=startIndex value=$startIndex+1}
 {/foreach}
-	
+
 <div class="contentNavigation">
 	{@$pagesLinks}
 	
@@ -61,8 +61,8 @@
 			</ul>
 		</nav>
 	{/hascontent}
-</div>	
-	
+</div>
+
 {include file='footer'}
 
 </body>

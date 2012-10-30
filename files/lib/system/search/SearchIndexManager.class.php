@@ -7,13 +7,13 @@ use wcf\system\WCF;
 
 /**
  * Manages the search index.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf.search
  * @subpackage	system.search
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class SearchIndexManager extends SingletonFactory {
 	/**
@@ -29,18 +29,18 @@ class SearchIndexManager extends SingletonFactory {
 		// get available object types
 		$this->availableObjectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.searchableObjectType');
 	}
-
+	
 	/**
-	 * Gets the object type id.
+	 * Returns the id of the object type with the given name.
 	 * 
-	 * @param	string 		$objectType
+	 * @param	string		$objectType
 	 * @return	integer
 	 */
 	public function getObjectTypeID($objectType) {
 		if (!isset($this->availableObjectTypes[$objectType])) {
 			throw new SystemException("unknown object type '".$objectType."'");
 		}
-
+		
 		return $this->availableObjectTypes[$objectType]->objectTypeID;
 	}
 	
