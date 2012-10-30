@@ -2,7 +2,7 @@
 
 <head>
 	<title>{lang}wcf.search.title{/lang} - {PAGE_TITLE|language}</title>
-
+	
 	{include file='headInclude'}
 </head>
 
@@ -30,7 +30,7 @@
 	<div class="container containerPadding marginTop shadow">
 		<fieldset>
 			<legend>{lang}wcf.search.general{/lang}</legend>
-	
+			
 			<dl{if $errorField == 'q'} class="formError"{/if}>
 				<dt><label for="searchTerm">{lang}wcf.search.query{/lang}</label></dt>
 				<dd>
@@ -102,7 +102,7 @@
 					<legend>{lang}wcf.search.type.{@$objectTypeName}{/lang}</legend>
 					
 					{include file=$objectType->getFormTemplateName()}
-				
+					
 					<script type="text/javascript">
 						//<![CDATA[
 						$(function() {

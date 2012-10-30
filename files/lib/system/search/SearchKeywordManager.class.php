@@ -1,11 +1,25 @@
 <?php
 namespace wcf\system\search;
-use wcf\data\search\keyword\SearchKeyword;
 use wcf\data\search\keyword\SearchKeywordAction;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
+/**
+ * Manages the search keywords.
+ * 
+ * @author	Marcel Werk
+ * @copyright	2001-2012 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	com.woltlab.wcf.search
+ * @subpackage	system.search
+ * @category	Community Framework
+ */
 class SearchKeywordManager extends SingletonFactory {
+	/**
+	 * Adds the given keyword.
+	 * 
+	 * @param	string		$keyword
+	 */
 	public function add($keyword) {
 		$keyword = static::simplifyKeyword($keyword);
 		
@@ -32,6 +46,12 @@ class SearchKeywordManager extends SingletonFactory {
 		}
 	}
 	
+	/**
+	 * Returns simplified version of the given keyword.
+	 * 
+	 * @param	string		$keyword
+	 * @return	string
+	 */
 	public static function simplifyKeyword($keyword) {
 		// TODO: do something useful
 		

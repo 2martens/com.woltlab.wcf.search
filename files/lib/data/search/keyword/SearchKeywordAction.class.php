@@ -13,7 +13,7 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf.search
  * @subpackage	data.search.keyword
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class SearchKeywordAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	/**
@@ -41,7 +41,7 @@ class SearchKeywordAction extends AbstractDatabaseObjectAction implements ISearc
 	public function getSearchResultList() {
 		$searchString = $this->parameters['data']['searchString'];
 		$list = array();
-	
+		
 		// find users
 		$sql = "SELECT		*
 			FROM		wcf".WCF_N."_search_keyword
@@ -55,7 +55,7 @@ class SearchKeywordAction extends AbstractDatabaseObjectAction implements ISearc
 				'objectID' => $row['keywordID']
 			);
 		}
-	
+		
 		return $list;
 	}
 }

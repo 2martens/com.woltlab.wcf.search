@@ -14,24 +14,24 @@ use wcf\util\StringUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf.search
  * @subpackage	system.search
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class SearchResultTextParser extends SingletonFactory {
 	/**
 	 * max length for message abstract
-	 * @var integer
+	 * @var	integer
 	 */
 	const MAX_LENGTH = 500;
 	
 	/**
 	 * utf8 bytes of the hellip char
-	 * @var string
+	 * @var	string
 	 */
 	const HELLIP = "\xE2\x80\xA6";
 	
 	/**
 	 * highlight query
-	 * @var mixed
+	 * @var	mixed
 	 */
 	protected $searchQuery = '';
 	
@@ -62,7 +62,7 @@ class SearchResultTextParser extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns an abstract of the given message. 
+	 * Returns an abstract of the given message.
 	 * Uses search keywords to shift the start and end position of the abstract (like Google).
 	 * 
 	 * @param	string		$text
@@ -172,7 +172,7 @@ class SearchResultTextParser extends SingletonFactory {
 					if (!empty($newText)) return $newText;
 				}
 			}
-		
+			
 			// no search query or no matches
 			return StringUtil::substring($text, 0, static::MAX_LENGTH) . static::HELLIP;
 		}

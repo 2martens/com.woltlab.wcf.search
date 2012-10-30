@@ -6,18 +6,18 @@
 		<version>1.0.0 Alpha 1</version>
 		<date>2011-07-28</date>
 	</packageinformation>
-
+	
 	<authorinformation>
 		<author>WoltLab GmbH</author>
 		<authorurl>http://www.woltlab.com</authorurl>
 	</authorinformation>
-
+	
 	<requiredpackages>
 		<requiredpackage minversion="2.0.0 Alpha 1">com.woltlab.wcf</requiredpackage>
 		<requiredpackage minversion="1.0.0 Alpha 1">com.woltlab.wcf.recaptcha</requiredpackage>
 		<requiredpackage minversion="1.0.0 Alpha 1">com.woltlab.wcf.bbcode</requiredpackage>
 	</requiredpackages>
-
+	
 	<instructions type="install">
 		<instruction type="file">files.tar</instruction>
 		<instruction type="template">templates.tar</instruction>

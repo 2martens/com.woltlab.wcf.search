@@ -1,7 +1,7 @@
 <aside id="search" class="searchBar dropdown">
 	<form method="post" action="{link controller='Search'}{/link}">
 		<input type="search" name="q" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" autocomplete="off" required="required" value="" class="dropdownToggle" data-toggle="search" />
-	
+		
 		<ul class="dropdownMenu">
 			<li class="dropdownText">
 				<label><input type="checkbox" name="subjectOnly" value="1" /> {lang}wcf.search.subjectOnly{/lang}</label>

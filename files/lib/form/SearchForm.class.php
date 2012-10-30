@@ -12,59 +12,68 @@ use wcf\system\request\LinkHandler;
 use wcf\system\search\SearchEngine;
 use wcf\system\search\SearchKeywordManager;
 use wcf\system\WCF;
-use wcf\util\ArrayUtil;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 
+/**
+ * Shows the search form.
+ * 
+ * @author	Marcel Werk
+ * @copyright	2001-2012 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	com.woltlab.wcf.search
+ * @subpackage	form
+ * @category	Community Framework
+ */
 class SearchForm extends RecaptchaForm {
 	/**
-	 * @see wcf\page\SortablePage::$sortField
+	 * @see	wcf\page\SortablePage::$sortField
 	 */
 	public $sortField = SEARCH_DEFAULT_SORT_FIELD;
 	
 	/**
-	 * @see wcf\page\SortablePage::$sortOrder
+	 * @see	wcf\page\SortablePage::$sortOrder
 	 */
 	public $sortOrder = SEARCH_DEFAULT_SORT_ORDER;
 	
 	/**
-	 * @see wcf\form\RecaptchaForm::$useCaptcha
+	 * @see	wcf\form\RecaptchaForm::$useCaptcha
 	 */
 	public $useCaptcha = SEARCH_USE_CAPTCHA;
 	
 	/**
 	 * search query
-	 * @var string
+	 * @var	string
 	 */
 	public $query = '';
 	
 	/**
 	 * username
-	 * @var string
+	 * @var	string
 	 */
 	public $username = '';
 	
 	/**
 	 * user id
-	 * @var integer
+	 * @var	integer
 	 */
 	public $userID = 0;
 	
 	/**
 	 * selected object types
-	 * @var array<string>
+	 * @var	array<string>
 	 */
 	public $selectedObjectTypes = array();
 	
 	/**
 	 * start date
-	 * @var integer
+	 * @var	integer
 	 */
 	public $startDate = '';
 	
 	/**
 	 * end date
-	 * @var integer
+	 * @var	integer
 	 */
 	public $endDate = '';
 	
@@ -81,7 +90,7 @@ class SearchForm extends RecaptchaForm {
 	public $additionalConditions = array();
 	
 	/**
-	 * @see wcf\page\IPage::readParameters()
+	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -115,7 +124,7 @@ class SearchForm extends RecaptchaForm {
 			$this->userID = $this->searchData['userID'];
 			$this->selectedObjectTypes = $this->searchData['selectedObjectTypes'];
 			
-			if (count($_POST)) {
+			if (!empty($_POST)) {
 				$this->submit = true;
 			}
 		}
@@ -146,7 +155,7 @@ class SearchForm extends RecaptchaForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::readFormParameters()
+	 * @see	wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -159,7 +168,7 @@ class SearchForm extends RecaptchaForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::validate()
+	 * @see	wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -213,7 +222,7 @@ class SearchForm extends RecaptchaForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::save()
+	 * @see	wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -275,7 +284,7 @@ class SearchForm extends RecaptchaForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -298,10 +307,10 @@ class SearchForm extends RecaptchaForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::show()
+	 * @see	wcf\page\IPage::show()
 	 */
 	public function show() {
-		if (!count($_POST) && $this->submit) {
+		if (empty($_POST) && $this->submit) {
 			if ($this->userID) $this->useCaptcha = false;
 			$this->submit();
 		}
@@ -320,7 +329,7 @@ class SearchForm extends RecaptchaForm {
 		// default conditions
 		$userIDs = $this->getUserIDs();
 		$this->searchIndexCondition = new PreparedStatementConditionBuilder(false);
-	
+		
 		// user ids
 		if (count($userIDs)) {
 			$this->searchIndexCondition->add('userID IN (?)', array($userIDs));
@@ -353,7 +362,7 @@ class SearchForm extends RecaptchaForm {
 			}
 		}
 		
-		if (!count($this->selectedObjectTypes)) {
+		if (empty($this->selectedObjectTypes)) {
 			$this->throwNoMatchesException();
 		}
 	}
@@ -361,7 +370,7 @@ class SearchForm extends RecaptchaForm {
 	/**
 	 * Returns user ids.
 	 * 
-	 * @return 	array<integer>
+	 * @return	array<integer>
 	 */
 	public function getUserIDs() {
 		$userIDs = array();
