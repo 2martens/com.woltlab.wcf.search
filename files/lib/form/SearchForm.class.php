@@ -77,6 +77,9 @@ class SearchForm extends RecaptchaForm {
 	 */
 	public $endDate = '';
 	
+	/**
+	 * @todo	comment properties
+	 */
 	public $submit = false;
 	public $nameExactly = 1;
 	public $subjectOnly = 0;
@@ -99,7 +102,7 @@ class SearchForm extends RecaptchaForm {
 		if (isset($_REQUEST['username'])) $this->username = StringUtil::trim($_REQUEST['username']);
 		if (isset($_REQUEST['userID'])) $this->userID = intval($_REQUEST['userID']);
 		if (isset($_REQUEST['selectedObjectTypes']) && is_array($_REQUEST['selectedObjectTypes'])) $this->selectedObjectTypes = $_REQUEST['selectedObjectTypes'];
-		$this->submit = (count($_POST) || !empty($this->query) || !empty($this->username) || $this->userID);
+		$this->submit = (!empty($_POST) || !empty($this->query) || !empty($this->username) || $this->userID);
 		
 		if (isset($_REQUEST['modify'])) {
 			$this->modifySearchID = intval($_REQUEST['modify']);
@@ -208,7 +211,7 @@ class SearchForm extends RecaptchaForm {
 		$this->results = SearchEngine::getInstance()->search($this->query, $this->selectedObjectTypes, $this->subjectOnly, $this->searchIndexCondition, $this->additionalConditions, $this->sortField.' '.$this->sortOrder);
 		
 		// result is empty
-		if (count($this->results) == 0) {
+		if (empty($this->results)) {
 			$this->throwNoMatchesException();
 		}
 	}
@@ -217,8 +220,12 @@ class SearchForm extends RecaptchaForm {
 	 * Throws a NamedUserException on search failure.
 	 */
 	public function throwNoMatchesException() {
-		if (empty($this->query)) throw new NamedUserException(WCF::getLanguage()->get('wcf.search.error.user.noMatches'));
-		else throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.search.error.noMatches', array('query' => $this->query)));
+		if (empty($this->query)) {
+			throw new NamedUserException(WCF::getLanguage()->get('wcf.search.error.user.noMatches'));
+		}
+		else {
+			throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.search.error.noMatches', array('query' => $this->query)));
+		}
 	}
 	
 	/**
@@ -322,7 +329,7 @@ class SearchForm extends RecaptchaForm {
 	 * Gets the conditions for a search in the table of the selected object types.
 	 */
 	protected function getConditions() {
-		if (!count($this->selectedObjectTypes)) {
+		if (empty($this->selectedObjectTypes)) {
 			$this->selectedObjectTypes = array_keys(SearchEngine::getInstance()->getAvailableObjectTypes());
 		}
 		
@@ -331,7 +338,7 @@ class SearchForm extends RecaptchaForm {
 		$this->searchIndexCondition = new PreparedStatementConditionBuilder(false);
 		
 		// user ids
-		if (count($userIDs)) {
+		if (!empty($userIDs)) {
 			$this->searchIndexCondition->add('userID IN (?)', array($userIDs));
 		}
 		
@@ -386,7 +393,7 @@ class SearchForm extends RecaptchaForm {
 				$userIDs[] = $row['userID'];
 			}
 			
-			if (!count($userIDs)) {
+			if (empty($userIDs)) {
 				$this->throwNoMatchesException();
 			}
 		}
