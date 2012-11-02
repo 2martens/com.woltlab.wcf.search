@@ -55,8 +55,12 @@ class SearchResultTextParser extends SingletonFactory {
 			}
 			else {
 				$this->searchQuery = ArrayUtil::trim(explode(' ', $keywordString));
-				if (count($this->searchQuery) == 0) $this->searchQuery = false;
-				else if (count($this->searchQuery) == 1) $this->searchQuery = reset($this->searchQuery);
+				if (empty($this->searchQuery)) {
+					$this->searchQuery = false;
+				}
+				else if (count($this->searchQuery) == 1) {
+					$this->searchQuery = reset($this->searchQuery);
+				}
 			}
 		}
 	}
