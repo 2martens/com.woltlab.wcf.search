@@ -18,12 +18,12 @@ use wcf\system\WCF;
 class SearchIndexManager extends SingletonFactory {
 	/**
 	 * list of available object types
-	 * @var array
+	 * @var	array
 	 */
 	protected $availableObjectTypes = array();
 	
 	/**
-	 * @see wcf\system\SingletonFactory::init()
+	 * @see	wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		// get available object types
