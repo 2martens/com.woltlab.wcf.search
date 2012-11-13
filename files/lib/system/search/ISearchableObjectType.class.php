@@ -38,6 +38,13 @@ interface ISearchableObjectType {
 	public function show(IForm $form = null);
 	
 	/**
+	 * Returns the application abbreviation.
+	 * 
+	 * @return	string
+	 */
+	public function getApplication();
+	
+	/**
 	 * Returns the search conditions of this message type.
 	 * 
 	 * @param	wcf\form\IForm			$form

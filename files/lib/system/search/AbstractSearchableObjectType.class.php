@@ -21,6 +21,13 @@ abstract class AbstractSearchableObjectType extends AbstractObjectTypeProcessor 
 	public function show(IForm $form = null) {}
 	
 	/**
+	 * @see	wcf\system\search\ISearchableObjectType::getApplication()
+	 */
+	public function getApplication() {
+		return 'wcf';
+	}
+	
+	/**
 	 * @see	wcf\system\search\ISearchableObjectType::getConditions()
 	 */
 	public function getConditions(IForm $form = null) {
