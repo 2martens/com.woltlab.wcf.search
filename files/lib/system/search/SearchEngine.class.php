@@ -5,6 +5,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * SearchEngine searches for given query in the selected object types.
@@ -76,6 +77,46 @@ class SearchEngine extends SingletonFactory {
 		$fulltextCondition = null;
 		$relevanceCalc = '';
 		if (!empty($q)) {
+			// expand search terms with a * unless they're encapsulated with quotes
+			$inQuotes = false;
+			$tmp = '';
+			$controlCharacterOrSpace = false;
+			$chars = array('+', '-', '*');
+			for ($i = 0, $length = StringUtil::length($q); $i < $length; $i++) {
+				$char = $q[$i];
+				
+				if ($inQuotes) {
+					if ($char == '"') {
+						$inQuotes = false;
+					}
+				}
+				else {
+					if ($char == '"') {
+						$inQuotes = true;
+					}
+					else {
+						if ($char == ' ' && !$controlCharacterOrSpace) {
+							$controlCharacterOrSpace = true;
+							$tmp .= '*';
+						}
+						else if (in_array($char, $chars)) {
+							$controlCharacterOrSpace = true;
+						}
+						else {
+							$controlCharacterOrSpace = false;
+						}
+					}
+				}
+				
+				$tmp .= $char;
+			}
+			
+			// handle last char
+			if (!$inQuotes && !$controlCharacterOrSpace) {
+				$tmp .= '*';
+			}
+			$q = $tmp;
+			
 			$fulltextCondition = new PreparedStatementConditionBuilder(false);
 			switch (WCF::getDB()->getDBType()) {
 				case 'wcf\system\database\MySQLDatabase':
@@ -83,6 +124,9 @@ class SearchEngine extends SingletonFactory {
 				break;
 				
 				case 'wcf\system\database\PostgreSQLDatabase':
+					// replace * with :*
+					$q = StringUtil::replace('*', ':*', $q);
+					
 					$fulltextCondition->add("fulltextIndex".($subjectOnly ? "SubjectOnly" : '')." @@ to_tsquery(?)", array($q));
 				break;
 				
