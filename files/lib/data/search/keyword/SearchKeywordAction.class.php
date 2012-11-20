@@ -2,7 +2,7 @@
 namespace wcf\data\search\keyword;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISearchAction;
-use wcf\system\exception\ValidateActionException;
+use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
 /**
@@ -31,7 +31,7 @@ class SearchKeywordAction extends AbstractDatabaseObjectAction implements ISearc
 	 */
 	public function validateGetSearchResultList() {
 		if (!isset($this->parameters['data']['searchString'])) {
-			throw new ValidateActionException("Missing parameter 'searchString'");
+			throw new UserInputException('searchString');
 		}
 	}
 	
