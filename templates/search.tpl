@@ -101,7 +101,7 @@
 				<fieldset id="{@$__jsID}Form">
 					<legend>{lang}wcf.search.type.{@$objectTypeName}{/lang}</legend>
 					
-					{include file=$objectType->getFormTemplateName()}
+					{include file=$objectType->getFormTemplateName() application=$objectType->getApplication()}
 					
 					<script type="text/javascript">
 						//<![CDATA[
