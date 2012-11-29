@@ -27,6 +27,48 @@ use wcf\util\StringUtil;
  */
 class SearchForm extends RecaptchaForm {
 	/**
+	 * list of additional conditions
+	 * @var	array<string>
+	 */
+	public $additionalConditions = array();
+	
+	/**
+	 * end date
+	 * @var	integer
+	 */
+	public $endDate = '';
+	
+	/**
+	 * true, if search should be modified
+	 * @var	boolean
+	 */
+	public $modifySearch = null;
+	
+	/**
+	 * search id used for modification
+	 * @var	integer
+	 */
+	public $modifySearchID = 0;
+	
+	/**
+	 * require exact matches
+	 * @var	integer
+	 */
+	public $nameExactly = 1;
+	
+	/**
+	 * search query
+	 * @var	string
+	 */
+	public $query = '';
+	
+	/**
+	 * list of search results
+	 * @var	array
+	 */
+	public $results = array();
+	
+	/**
 	 * @see	wcf\page\SortablePage::$sortField
 	 */
 	public $sortField = SEARCH_DEFAULT_SORT_FIELD;
@@ -37,15 +79,10 @@ class SearchForm extends RecaptchaForm {
 	public $sortOrder = SEARCH_DEFAULT_SORT_ORDER;
 	
 	/**
-	 * @see	wcf\form\RecaptchaForm::$useCaptcha
+	 * user id
+	 * @var	integer
 	 */
-	public $useCaptcha = SEARCH_USE_CAPTCHA;
-	
-	/**
-	 * search query
-	 * @var	string
-	 */
-	public $query = '';
+	public $userID = 0;
 	
 	/**
 	 * username
@@ -54,10 +91,33 @@ class SearchForm extends RecaptchaForm {
 	public $username = '';
 	
 	/**
-	 * user id
+	 * @see	wcf\form\RecaptchaForm::$useCaptcha
+	 */
+	public $useCaptcha = SEARCH_USE_CAPTCHA;
+	
+	/**
+	 * parameters used for previous search
+	 * @var	array
+	 */
+	public $searchData = array();
+	
+	/**
+	 * search id
 	 * @var	integer
 	 */
-	public $userID = 0;
+	public $searchID = 0;
+	
+	/**
+	 * PreparedStatementConditionBuilder object
+	 * @var	wcf\system\database\util\PreparedStatementConditionBuilder
+	 */
+	public $searchIndexCondition = null;
+	
+	/**
+	 * search hash to modify existing search
+	 * @var	string
+	 */
+	public $searchHash = '';
 	
 	/**
 	 * selected object types
@@ -72,25 +132,16 @@ class SearchForm extends RecaptchaForm {
 	public $startDate = '';
 	
 	/**
-	 * end date
+	 * search for subject only
 	 * @var	integer
 	 */
-	public $endDate = '';
+	public $subjectOnly = 0;
 	
 	/**
-	 * @todo	comment properties
+	 * mark as submitted form if modifying search
+	 * @var	boolean
 	 */
 	public $submit = false;
-	public $nameExactly = 1;
-	public $subjectOnly = 0;
-	public $searchHash = '';
-	public $results = array();
-	public $searchData = array();
-	public $searchID = 0;
-	public $modifySearchID = 0;
-	public $modifySearch = null;
-	public $searchIndexCondition = null;
-	public $additionalConditions = array();
 	
 	/**
 	 * @see	wcf\page\IPage::readParameters()
