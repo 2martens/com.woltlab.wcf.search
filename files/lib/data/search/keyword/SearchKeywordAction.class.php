@@ -27,7 +27,7 @@ class SearchKeywordAction extends AbstractDatabaseObjectAction implements ISearc
 	protected $allowGuestAccess = array('getSearchResultList');
 	
 	/**
-	 * @see	wcf\data\IPositionAction::validateGetSearchResultList()
+	 * @see	wcf\data\ISearchAction::validateGetSearchResultList()
 	 */
 	public function validateGetSearchResultList() {
 		if (!isset($this->parameters['data']['searchString'])) {
@@ -36,7 +36,7 @@ class SearchKeywordAction extends AbstractDatabaseObjectAction implements ISearc
 	}
 	
 	/**
-	 * @see	wcf\data\IPositionAction::getSearchResultList()
+	 * @see	wcf\data\ISearchAction::getSearchResultList()
 	 */
 	public function getSearchResultList() {
 		$searchString = $this->parameters['data']['searchString'];
