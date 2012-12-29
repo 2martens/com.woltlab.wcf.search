@@ -24,12 +24,6 @@ class SearchResultTextParser extends SingletonFactory {
 	const MAX_LENGTH = 500;
 	
 	/**
-	 * utf8 bytes of the hellip char
-	 * @var	string
-	 */
-	const HELLIP = "\xE2\x80\xA6";
-	
-	/**
 	 * highlight query
 	 * @var	mixed
 	 */
@@ -116,9 +110,9 @@ class SearchResultTextParser extends SingletonFactory {
 						}
 						
 						$newText = '';
-						if ($start > 0) $newText .= static::HELLIP;
+						if ($start > 0) $newText .= StringUtil::HELLIP;
 						$newText .= StringUtil::substring($text, $start, $end - $start);
-						if ($end < StringUtil::length($text) - 1) $newText .= static::HELLIP;
+						if ($end < StringUtil::length($text) - 1) $newText .= StringUtil::HELLIP;
 						return $newText;
 					}
 				}
@@ -165,9 +159,9 @@ class SearchResultTextParser extends SingletonFactory {
 							$position['end'] = $end;
 						}
 						
-						if ($position['start'] > $start) $newText .= static::HELLIP;
+						if ($position['start'] > $start) $newText .= StringUtil::HELLIP;
 						$newText .= StringUtil::substring($text, $position['start'], $position['end'] - $position['start']);
-						if ($i == $length - 1 && $position['end'] < $end) $newText .= static::HELLIP;
+						if ($i == $length - 1 && $position['end'] < $end) $newText .= StringUtil::HELLIP;
 						
 						$start = $position['end'];
 						$i++;
@@ -178,7 +172,7 @@ class SearchResultTextParser extends SingletonFactory {
 			}
 			
 			// no search query or no matches
-			return StringUtil::substring($text, 0, static::MAX_LENGTH) . static::HELLIP;
+			return StringUtil::substring($text, 0, static::MAX_LENGTH) . StringUtil::HELLIP;
 		}
 		
 		return $text;
