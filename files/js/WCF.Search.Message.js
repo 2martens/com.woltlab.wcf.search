@@ -84,6 +84,11 @@ WCF.Search.Message.SearchArea = Class.extend({
 		this._searchArea = searchArea;
 		
 		new WCF.Search.Message.KeywordList(this._searchArea.find('input[type=search]'), $.proxy(this._callback, this));
+		
+		// forward clicks on the search icon to input field
+		var self = this;
+		var $input = this._searchArea.find('input[type=search]');
+		this._searchArea.click(function() { $input.focus().trigger('click'); return false; });
 	},
 	
 	_callback: function(data) {

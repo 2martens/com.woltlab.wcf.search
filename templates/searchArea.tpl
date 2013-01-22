@@ -13,7 +13,7 @@
 	</form>
 </aside>
 
-<script type="text/javascript" src="{@$__wcf->getPath('wcf')}js/WCF.Search.Message.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath('wcf')}js/WCF.Search.Message.js?t={@TIME_NOW}"></script>
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
