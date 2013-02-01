@@ -37,14 +37,7 @@
 	{/hascontent}
 </div>
 
-{assign var=i value=0}
-{assign var=length value=$messages|count}
-
-{foreach from=$messages item=item}
-	{include file=$objectTypes[$item[type]]->getResultTemplateName() application=$objectTypes[$item[type]]->getApplication()}
-	{assign var=i value=$i+1}
-	{assign var=startIndex value=$startIndex+1}
-{/foreach}
+{include file=$resultListTemplateName application=$resultListApplication}
 
 <div class="contentNavigation">
 	{@$pagesLinks}

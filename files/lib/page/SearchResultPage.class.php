@@ -53,6 +53,18 @@ class SearchResultPage extends MultipleLinkPage {
 	public $searchData = null;
 	
 	/**
+	 *  result list template
+	 * @var string
+	 */
+	public $resultListTemplateName = 'searchResultList';
+	
+	/**
+	 * result list template's application
+	 * @var string
+	 */
+	public $resultListApplication = 'wcf';
+	
+	/**
 	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
@@ -107,7 +119,7 @@ class SearchResultPage extends MultipleLinkPage {
 		
 		foreach ($types as $type => $objectIDs) {
 			$objectType = SearchEngine::getInstance()->getObjectType($type);
-			$objectType->cacheMessageData($objectIDs, (isset($this->searchData['additionalData'][$type]) ? $this->searchData['additionalData'][$type] : null));
+			$objectType->cacheObjects($objectIDs, (isset($this->searchData['additionalData'][$type]) ? $this->searchData['additionalData'][$type] : null));
 		}
 	}
 	
@@ -120,7 +132,7 @@ class SearchResultPage extends MultipleLinkPage {
 			$objectID = $this->searchData['results'][$i]['objectID'];
 			
 			$objectType = SearchEngine::getInstance()->getObjectType($type);
-			if (($message = $objectType->getMessageData($objectID)) !== null) {
+			if (($message = $objectType->getObject($objectID)) !== null) {
 				$this->messages[] = $message;
 			}
 		}
@@ -134,13 +146,15 @@ class SearchResultPage extends MultipleLinkPage {
 		
 		WCF::getTPL()->assign(array(
 			'query' => $this->searchData['query'],
-			'messages' => $this->messages,
+			'objects' => $this->messages,
 			'searchID' => $this->searchID,
 			'highlight' => $this->highlight,
 			'sortField' => $this->searchData['sortField'],
 			'sortOrder' => $this->searchData['sortOrder'],
 			'alterable' => (!empty($this->searchData['alterable']) ? 1 : 0),
-			'objectTypes' => SearchEngine::getInstance()->getAvailableObjectTypes()
+			'objectTypes' => SearchEngine::getInstance()->getAvailableObjectTypes(),
+			'resultListTemplateName' => $this->resultListTemplateName,
+			'resultListApplication' => $this->resultListApplication
 		));
 	}
 	

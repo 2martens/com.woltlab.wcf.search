@@ -152,7 +152,7 @@ class SearchForm extends RecaptchaForm {
 		if (isset($_REQUEST['q'])) $this->query = StringUtil::trim($_REQUEST['q']);
 		if (isset($_REQUEST['username'])) $this->username = StringUtil::trim($_REQUEST['username']);
 		if (isset($_REQUEST['userID'])) $this->userID = intval($_REQUEST['userID']);
-		if (isset($_REQUEST['selectedObjectTypes']) && is_array($_REQUEST['selectedObjectTypes'])) $this->selectedObjectTypes = $_REQUEST['selectedObjectTypes'];
+		if (isset($_REQUEST['types']) && is_array($_REQUEST['types'])) $this->selectedObjectTypes = $_REQUEST['types'];
 		$this->submit = (!empty($_POST) || !empty($this->query) || !empty($this->username) || $this->userID);
 		
 		if (isset($_REQUEST['modify'])) {

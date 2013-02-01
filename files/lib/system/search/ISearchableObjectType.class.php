@@ -20,15 +20,15 @@ interface ISearchableObjectType {
 	 * @param	array		$objectIDs
 	 * @param	array		$additionalData
 	 */
-	public function cacheMessageData(array $objectIDs, array $additionalData = null);
+	public function cacheObjects(array $objectIDs, array $additionalData = null);
 	
 	/**
-	 * Returns the data for the given object id.
+	 * Returns the object with the given object id.
 	 * 
 	 * @param	integer		$objectID
-	 * @return	array
+	 * @return	wcf\data\search\ISearchResultObject
 	 */
-	public function getMessageData($objectID);
+	public function getObject($objectID);
 	
 	/**
 	 * Shows the form part of this object type.
@@ -114,13 +114,6 @@ interface ISearchableObjectType {
 	 * @return	string
 	 */
 	public function getFormTemplateName();
-	
-	/**
-	 * Returns the name of the result page template for this object type.
-	 * 
-	 * @return	string
-	 */
-	public function getResultTemplateName();
 	
 	/**
 	 * Provides the option to replace the default search index SQL query by an own version. 
