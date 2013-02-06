@@ -1,5 +1,5 @@
 <div class="container marginTop">
-	<ul class="containerList">
+	<ul class="containerList messageSearchResultList">
 		{foreach from=$objects item=message}
 			<li>
 				<div class="box48">
