@@ -56,14 +56,16 @@ interface ISearchResultObject {
 	public function getFormattedMessage();
 	
 	/**
-	 * Returns the title of object's container. Returns empty string, if there is no container.
+	 * Returns the title of object's container. Returns empty string if there
+	 * is no container.
 	 * 
 	 * @return	string
 	 */
 	public function getContainerTitle();
 	
 	/**
-	 * Returns the link to object's container. Returns empty string, if there is no container.
+	 * Returns the link to object's container. Returns empty string if there
+	 * is no container.
 	 *
 	 * @return	string
 	 */
