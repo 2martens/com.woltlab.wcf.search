@@ -3,7 +3,7 @@ namespace wcf\data\search;
 
 /**
  * All search result objects should implement this interface. 
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -66,7 +66,7 @@ interface ISearchResultObject {
 	/**
 	 * Returns the link to object's container. Returns empty string if there
 	 * is no container.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public function getContainerLink();
