@@ -102,7 +102,7 @@ interface ISearchableObjectType {
 	public function getAdditionalData();
 	
 	/**
-	 * Returns true, if the current user can use this searchable object type.
+	 * Returns true if the current user can use this searchable object type.
 	 * 
 	 * @return	boolean
 	 */
