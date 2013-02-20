@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * Shows the result of a search request.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf.search
  * @subpackage	page
@@ -147,6 +147,7 @@ class SearchResultPage extends MultipleLinkPage {
 		WCF::getTPL()->assign(array(
 			'query' => $this->searchData['query'],
 			'objects' => $this->messages,
+			'searchData' => $this->searchData,
 			'searchID' => $this->searchID,
 			'highlight' => $this->highlight,
 			'sortField' => $this->searchData['sortField'],
