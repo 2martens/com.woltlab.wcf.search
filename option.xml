@@ -41,7 +41,6 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 				<categoryname>message.search</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>1000</defaultvalue>
-				<validationpattern>^\d{3,5}$</validationpattern>
 				<minvalue>100</minvalue>
 				<maxvalue>10000</maxvalue>
 			</option>
