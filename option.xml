@@ -11,7 +11,9 @@
 			<option name="search_results_per_page">
 				<categoryname>message.search</categoryname>
 				<optiontype>integer</optiontype>
-				<defaultvalue><![CDATA[20]]></defaultvalue>
+				<defaultvalue>20</defaultvalue>
+				<minvalue>5</minvalue>
+				<maxvalue>40</maxvalue>
 			</option>
 			<option name="search_use_captcha">
 				<categoryname>security.antispam</categoryname>
@@ -40,6 +42,8 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 				<optiontype>integer</optiontype>
 				<defaultvalue>1000</defaultvalue>
 				<validationpattern>^\d{3,5}$</validationpattern>
+				<minvalue>100</minvalue>
+				<maxvalue>10000</maxvalue>
 			</option>
 		</options>
 	</import>
