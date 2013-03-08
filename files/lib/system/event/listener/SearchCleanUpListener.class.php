@@ -24,11 +24,9 @@ class SearchCleanUpListener implements IEventListener {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
 		if (($row = $statement->fetchArray()) !== false) {
-			$average = floor($row['searches'] / 4);
-			
 			$sql = "DELETE FROM	wcf".WCF_N."_search_keyword
 				WHERE		searches <= ?
-						lastSearchTime < ?";
+						AND lastSearchTime < ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array(
 				floor($row['searches'] / 4),
