@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * Executes keyword-related actions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf.search
  * @subpackage	data.search.keyword
@@ -30,16 +30,13 @@ class SearchKeywordAction extends AbstractDatabaseObjectAction implements ISearc
 	 * @see	wcf\data\ISearchAction::validateGetSearchResultList()
 	 */
 	public function validateGetSearchResultList() {
-		if (!isset($this->parameters['data']['searchString'])) {
-			throw new UserInputException('searchString');
-		}
+		$this->readString('searchString', false, 'data');
 	}
 	
 	/**
 	 * @see	wcf\data\ISearchAction::getSearchResultList()
 	 */
 	public function getSearchResultList() {
-		$searchString = $this->parameters['data']['searchString'];
 		$list = array();
 		
 		// find users
@@ -48,7 +45,7 @@ class SearchKeywordAction extends AbstractDatabaseObjectAction implements ISearc
 			WHERE		keyword LIKE ?
 			ORDER BY	searches DESC";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($searchString.'%'));
+		$statement->execute(array($this->parameters['data']['searchString'].'%'));
 		while ($row = $statement->fetchArray()) {
 			$list[] = array(
 				'label' => $row['keyword'],
